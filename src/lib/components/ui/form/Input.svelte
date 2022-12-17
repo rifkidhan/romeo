@@ -22,6 +22,9 @@
 	 */
 	export let iconPosition: 'left' | 'right' | undefined = icons ? 'left' : undefined;
 
+	export let ref: HTMLInputElement | undefined = undefined;
+	export let value: string | number = '';
+
 	let rootCN = cn('wrapper', [iconPosition], $$props.class);
 </script>
 
@@ -31,7 +34,19 @@
 			<Icons name={icons} />
 		</span>
 	{/if}
-	<input class="input" id={id ? id : name} {name} {...$$restProps} on:change on:input on:blur />
+	<input
+		bind:value
+		bind:this={ref}
+		class="input"
+		id={id ? id : name}
+		{name}
+		{...$$restProps}
+		on:change
+		on:input
+		on:blur
+		on:keydown
+		on:keypress
+	/>
 </span>
 
 <style lang="postcss">

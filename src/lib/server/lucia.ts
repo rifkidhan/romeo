@@ -6,6 +6,7 @@ import { dev } from '$app/environment';
 export const auth = lucia({
 	adapter: Adapter(DETA_PROJECT_KEY),
 	env: dev ? 'DEV' : 'PROD',
+
 	transformUserData: (userData) => {
 		return {
 			userId: userData.id,

@@ -32,6 +32,7 @@
 	stroke-linecap="round"
 	stroke-linejoin="round"
 	class={cn(icons.attrs.class, $$props.class ? $$props.class : 'default')}
+	{...$$restProps}
 >
 	{@html icons.contents}
 </svg>

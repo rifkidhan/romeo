@@ -2,7 +2,7 @@
 	import { Button } from '$lib/components/ui';
 	import { draw } from 'svelte/transition';
 	import { circInOut } from 'svelte/easing';
-	import { displayNavbar } from '$lib/utils/store';
+	import { displayNavbar } from '$lib/stores/ui';
 
 	let className: string | undefined = undefined;
 

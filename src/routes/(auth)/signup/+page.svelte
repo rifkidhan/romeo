@@ -23,6 +23,7 @@
 
 		<Field label="Username" htmlFor="username">
 			<Input
+				type="text"
 				name="username"
 				required
 				placeholder="input your username"

@@ -7,21 +7,37 @@
 	import ListPlugin from './plugins/ListPlugin.svelte';
 	import OnChangePlugin from './plugins/OnChangePlugin.svelte';
 	import HtmlPlugin from './plugins/HtmlPlugin.svelte';
+	import AutoLinkPlugin from './plugins/link/AutoLinkPlugin.svelte';
+	import LinkPlugin from './plugins/link/LinkPlugin.svelte';
+	import CodeHighlightingPlugin from './plugins/CodeHighlightingPlugin.svelte';
+	import FloatingLinkPlugin from './plugins/link/FloatingLinkPlugin.svelte';
 	import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 	import { ListItemNode, ListNode } from '@lexical/list';
-	// import theme from './themes/PlaygroundEditorThemes';
+	import { LinkNode, AutoLinkNode } from '@lexical/link';
+	import { CodeNode, CodeHighlightNode } from '@lexical/code';
+	import { validateUrl } from './utils/url';
+	import theme from './themes/PlaygroundEditorThemes';
 
 	const dispatch = createEventDispatcher();
 
 	let htmlString: string | undefined = undefined;
 	export let editable: boolean | undefined = undefined;
+	let ref: HTMLElement;
 
-	// export let convertToNode: string | undefined = undefined;
 	const config = {
 		editable,
-
+		theme,
 		namespace: 'RomeoRichText',
-		nodes: [HeadingNode, ListNode, ListItemNode, QuoteNode],
+		nodes: [
+			HeadingNode,
+			ListNode,
+			ListItemNode,
+			QuoteNode,
+			LinkNode,
+			AutoLinkNode,
+			CodeHighlightNode,
+			CodeNode
+		],
 		onError: (error: Error) => {
 			throw error;
 		}
@@ -35,11 +51,14 @@
 </script>
 
 <div class="editor">
-	<Editor {config}>
+	<Editor {config} bind:floatingRef={ref}>
 		<Toolbar slot="toolbar" />
 		<RichtextPlugin />
 		<HistoryPlugin />
 		<ListPlugin />
+		<AutoLinkPlugin />
+		<CodeHighlightingPlugin />
+		<LinkPlugin {validateUrl} />
 		<OnChangePlugin {onChange} />
 		<HtmlPlugin
 			{htmlString}
@@ -47,6 +66,8 @@
 				htmlString = e.detail.html;
 			}}
 		/>
+
+		<FloatingLinkPlugin anchorElement={ref} />
 	</Editor>
 </div>
 

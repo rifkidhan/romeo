@@ -4,14 +4,11 @@
 	import { Richtext } from '$lib/components/common';
 
 	let files: FileList;
-	let image: File | null = null;
 	let checked = false;
 
 	$: file = files ? URL.createObjectURL(files[0]) : null;
-	$: image = files ? files[0] : null;
-	let content: string;
 
-	$: console.log(image);
+	let content: string;
 </script>
 
 <div class="container mx-auto my-10 flex flex-col">
@@ -32,7 +29,6 @@
 		</span>
 
 		<Field label="Thumbnail" htmlFor="thumbnail">
-			<input type="hidden" id="content-type" name="content-type" value={image?.type} />
 			<Dropzone name="thumbnail" bind:files>
 				<img
 					src={file}

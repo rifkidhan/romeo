@@ -5,3 +5,4 @@ export { default as Darkmode } from './DarkmodeButton.svelte';
 export { default as MenuButton } from './MenuButton.svelte';
 export { default as BackToTop } from './BackToTop.svelte';
 export { default as Richtext } from './Richtext/Richtext.svelte';
+export { default as UiContext } from './UiContext.svelte';

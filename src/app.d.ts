@@ -9,11 +9,13 @@ declare namespace Lucia {
 		email: string;
 	};
 }
+
+/// <reference types="@sveltejs/kit" />
 declare namespace App {
 	// interface Error {}
 	interface Locals {
-		getSession: import('@lucia-auth/sveltekit').GetSession;
-		getSessionUser: import('@lucia-auth/sveltekit').GetSessionUser;
+		validate: import('@lucia-auth/sveltekit').Validate;
+		validateUser: import('@lucia-auth/sveltekit').ValidateUser;
 		setSession: import('@lucia-auth/sveltekit').SetSession;
 	}
 	// interface PageData {}

@@ -8,7 +8,7 @@
 	import { page } from '$app/stores';
 	import { MenuButton, Darkmode } from '$lib/components/common';
 	import { Logo, Button } from '$lib/components/ui';
-	import { displayNavbar } from '$lib/utils/store';
+	import { displayNavbar } from '$lib/stores/ui';
 	import type { TransitionConfig } from 'svelte/transition';
 	import { cubicInOut } from 'svelte/easing';
 

@@ -42,6 +42,7 @@
 	on:mouseleave
 	on:mouseover
 	on:focus
+	on:mousedown
 >
 	{#if loading}
 		<Loading type="dots" />

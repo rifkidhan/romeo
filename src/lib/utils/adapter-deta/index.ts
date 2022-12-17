@@ -4,8 +4,8 @@ import { getUpdateData } from 'lucia-auth/adapter';
 import { Deta } from 'deta';
 import { convertSession, convertUser, type DetaUser, type DetaSession } from './utils';
 
-/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
-const adapter = (projectKey: string, errorHandler: (error: any) => void): Adapter => {
+/* eslint-disable-next-line */
+const adapter = (projectKey: string, errorHandler: (error: any) => void = () => {}): Adapter => {
 	const deta = Deta(projectKey);
 	const User = deta.Base('user');
 	const Session = deta.Base('session');

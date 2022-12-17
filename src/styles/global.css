@@ -1,4 +1,5 @@
 @import url('./syntax.css');
+@import url('./richtext.css');
 
 @tailwind base;
 @tailwind components;
@@ -175,7 +176,7 @@
 
 @layer utilities {
 	::-webkit-scrollbar {
-		@apply h-3 w-3 overflow-auto;
+		@apply h-2 w-2 overflow-auto;
 	}
 
 	::-webkit-scrollbar-track {

@@ -1,5 +1,8 @@
 <script lang="ts">
+	import cn from 'clsx';
 	export let name: string;
+
+	$: className = cn('w-6 stroke-2', $$props.class);
 </script>
 
 <svg
@@ -9,7 +12,7 @@
 	fill="none"
 	stroke-linecap="round"
 	stroke-linejoin="round"
-	class="w-6 stroke-2"
+	class={className}
 >
 	{#if name === 'bold'}
 		<path d="M7 5h6a3.5 3.5 0 0 1 0 7h-6z" />

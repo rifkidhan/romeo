@@ -1,6 +1,7 @@
 <script lang="ts">
 	import cn from 'clsx';
 	import { Image } from '$lib/components/ui';
+	import { fade } from 'svelte/transition';
 
 	export let href: string | undefined = undefined;
 	export let horizontal = false;
@@ -8,6 +9,8 @@
 
 	export let imageSrc: string | undefined = undefined;
 	export let imageAlt = '';
+
+	let loading = true;
 
 	$: cardCN = cn(
 		'card',
@@ -22,7 +25,20 @@
 <svelte:element this={href ? 'a' : 'div'} {href} class={cardCN} {...$$restProps}>
 	{#if imageSrc}
 		<div class="image-wrapper">
-			<Image src={imageSrc} alt={imageAlt} class="h-full w-full object-cover object-center" />
+			{#if loading}
+				<div class="skeleton h-full w-full" />
+			{/if}
+			<Image
+				src={imageSrc}
+				alt={imageAlt}
+				on:loadstart={() => {
+					loading = true;
+				}}
+				on:loadingComplete={() => {
+					loading = false;
+				}}
+				class="h-full w-full object-cover object-center"
+			/>
 		</div>
 
 		<div class={cn('padding', 'content')}>

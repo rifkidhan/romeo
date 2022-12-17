@@ -1,47 +1,43 @@
 <script lang="ts">
-	import { onMount, createEventDispatcher } from 'svelte';
-	import { browser } from '$app/environment';
 	import { fade } from 'svelte/transition';
+	import { createEventDispatcher } from 'svelte';
+	import cn from 'clsx';
 
 	export let src: string;
 	export let alt: string;
 	export let loading: 'lazy' | 'eager' = 'lazy';
 
-	let image: HTMLImageElement | null = null;
-	let loaded = false;
-	let error = false;
-
 	const dispatch = createEventDispatcher();
 
-	const loadImage = () => {
-		if (image !== null) image = null;
-		loaded = false;
-		image = new Image();
-		image.src = src;
-		image.loading = loading;
-		image.decoding = 'async';
-		image.onload = () => (loaded = true);
-		image.onerror = () => (error = true);
-	};
+	let loaded = false;
 
-	$: isLoading = !loaded && !error;
-	$: if (src && browser) {
-		loadImage();
-	}
-	$: if (loaded) dispatch('load');
-	$: if (error) dispatch('error');
+	$: imageClass = cn('transition', loaded ? 'loaded' : 'loading', $$props.class);
 
-	onMount(() => {
-		return () => (image = null);
-	});
+	$: if (loaded) dispatch('loadingComplete');
 </script>
 
-{#if isLoading}
-	<slot name="loading" />
-{/if}
-{#if loaded}
-	<img {src} {alt} {...$$restProps} transition:fade|local />
-{/if}
-{#if error}
-	<slot name="error" />
-{/if}
+<img
+	{src}
+	{alt}
+	{loading}
+	{...$$restProps}
+	class={imageClass}
+	on:load={() => {
+		loaded = true;
+	}}
+	on:error
+	on:loadstart
+	transition:fade|local={{ duration: 150 }}
+/>
+
+<style lang="postcss">
+	.transition {
+		@apply transition-all duration-300 ease-in-out;
+	}
+	.loading {
+		@apply scale-105 blur-lg;
+	}
+	.loaded {
+		@apply scale-100 blur-none;
+	}
+</style>

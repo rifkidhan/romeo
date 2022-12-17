@@ -3,6 +3,7 @@
 	import { createEditor } from 'lexical';
 
 	export let config = {};
+	export let floatingRef: HTMLDivElement | HTMLElement | undefined = undefined;
 
 	let contentEditable: HTMLDivElement;
 
@@ -19,6 +20,7 @@
 	<slot name="toolbar" />
 	<div class="separator" />
 	<div>
+		<div bind:this={floatingRef} />
 		<div contenteditable="true" bind:this={contentEditable} class="contenteditable" />
 		<slot />
 	</div>
@@ -32,6 +34,6 @@
 		@apply h-[2px] w-full bg-secondary;
 	}
 	.contenteditable {
-		@apply mx-auto min-h-[10rem] w-full whitespace-pre-wrap break-words p-5 focus:outline-none;
+		@apply mx-auto max-h-[120vh] min-h-[10rem] w-full overflow-y-auto whitespace-pre-wrap break-words p-5 focus:outline-none;
 	}
 </style>
