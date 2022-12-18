@@ -11,10 +11,15 @@
 	import LinkPlugin from './plugins/link/LinkPlugin.svelte';
 	import CodeHighlightingPlugin from './plugins/CodeHighlightingPlugin.svelte';
 	import FloatingLinkPlugin from './plugins/link/FloatingLinkPlugin.svelte';
+	import AutofocusPlugin from './plugins/AutofocusPlugin.svelte';
+	import HorizontalRulePlugin from './plugins/HorizontalRulePlugin.svelte';
+	import ImagePlugin from './plugins/ImagePlugin.svelte';
 	import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 	import { ListItemNode, ListNode } from '@lexical/list';
 	import { LinkNode, AutoLinkNode } from '@lexical/link';
 	import { CodeNode, CodeHighlightNode } from '@lexical/code';
+	import { HorizontalRuleNode } from './nodes/HorizontalRuleNode';
+	import { ImageNode } from './nodes/ImageNode';
 	import { validateUrl } from './utils/url';
 	import theme from './themes/PlaygroundEditorThemes';
 
@@ -36,7 +41,9 @@
 			LinkNode,
 			AutoLinkNode,
 			CodeHighlightNode,
-			CodeNode
+			CodeNode,
+			HorizontalRuleNode,
+			ImageNode
 		],
 		onError: (error: Error) => {
 			throw error;
@@ -58,6 +65,9 @@
 		<ListPlugin />
 		<AutoLinkPlugin />
 		<CodeHighlightingPlugin />
+		<AutofocusPlugin />
+		<HorizontalRulePlugin />
+		<ImagePlugin />
 		<LinkPlugin {validateUrl} />
 		<OnChangePlugin {onChange} />
 		<HtmlPlugin

@@ -21,7 +21,15 @@
 	<div class="separator" />
 	<div>
 		<div bind:this={floatingRef} />
-		<div contenteditable="true" bind:this={contentEditable} class="contenteditable" />
+		<div
+			contenteditable="true"
+			bind:this={contentEditable}
+			class="contenteditable"
+			autoComplete="off"
+			autoCorrect="off"
+			autoCapitalize="off"
+			spellCheck="false"
+		/>
 		<slot />
 	</div>
 </div>
@@ -34,6 +42,6 @@
 		@apply h-[2px] w-full bg-secondary;
 	}
 	.contenteditable {
-		@apply mx-auto max-h-[120vh] min-h-[10rem] w-full overflow-y-auto whitespace-pre-wrap break-words p-5 focus:outline-none;
+		@apply mx-auto max-h-[120vh] min-h-[10rem] w-full overflow-y-auto overscroll-y-auto whitespace-pre-wrap break-words p-5 focus:outline-none;
 	}
 </style>

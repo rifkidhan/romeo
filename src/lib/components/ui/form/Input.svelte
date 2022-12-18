@@ -40,6 +40,10 @@
 		class="input"
 		id={id ? id : name}
 		{name}
+		autoComplete="off"
+		autoCorrect="off"
+		autoCapitalize="off"
+		spellCheck="false"
 		{...$$restProps}
 		on:change
 		on:input

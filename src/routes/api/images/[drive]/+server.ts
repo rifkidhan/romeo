@@ -32,3 +32,24 @@ export const GET: RequestHandler = async ({ params, url }) => {
 		}
 	});
 };
+
+export const POST: RequestHandler = async ({ params, request }) => {
+	const drivename = params.drive;
+	const form = await request.formData();
+	const image = form.get('image') as File;
+
+	const contentType = image.type;
+	const originalImageName = image.name;
+	const file = await image.arrayBuffer();
+	const imageUpload = deta.Drive(drivename);
+
+	const uploading = await imageUpload.put(originalImageName, {
+		data: Buffer.from(file),
+		contentType
+	});
+
+	if (!uploading) {
+		throw error(500, 'something error');
+	}
+	return new Response(String('test'));
+};

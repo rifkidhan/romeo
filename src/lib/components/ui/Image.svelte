@@ -17,9 +17,9 @@
 </script>
 
 <img
+	{loading}
 	{src}
 	{alt}
-	{loading}
 	{...$$restProps}
 	class={imageClass}
 	on:load={() => {

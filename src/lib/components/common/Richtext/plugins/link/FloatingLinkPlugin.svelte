@@ -176,7 +176,7 @@
 		{#if editMode}
 			<div class="input">
 				<Input
-					name="inputlink"
+					name="input-link-plugin-lexical"
 					bind:ref={inputRef}
 					bind:value={linkUrl}
 					on:keydown={(e) => {

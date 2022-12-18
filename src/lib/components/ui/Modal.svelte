@@ -35,7 +35,7 @@
 	});
 </script>
 
-<!-- <svelte:window on:keydown={onKeydown} /> -->
+<svelte:window on:keydown={onKeydown} />
 
 <div class="root" bind:this={modalRef} transition:scale={{ easing: cubicInOut, duration: 200 }}>
 	<div class="modal" role="dialog" bind:this={modalInner}>

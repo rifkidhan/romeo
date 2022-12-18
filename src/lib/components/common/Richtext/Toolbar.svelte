@@ -43,6 +43,7 @@
 	} from '@lexical/code';
 	import { $wrapNodes as wrapNodes } from '@lexical/selection';
 	import { $isLinkNode as isLinkNode, TOGGLE_LINK_COMMAND } from '@lexical/link';
+	import { INSERT_HORIZONTAL_RULE_COMMAND } from './nodes/HorizontalRuleNode';
 	import getSelectedNode from './utils/getSelectedNode';
 	import { sanitizeUrl } from './utils/url';
 	import { floatingLink } from './utils/storeAction';
@@ -374,6 +375,11 @@
 			name: 'Code Block Format',
 			command: () => formatCode(),
 			active: blockType === 'code'
+		},
+		{
+			id: 'separator',
+			name: 'Add Separator',
+			command: () => editor.dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined)
 		}
 	];
 </script>
@@ -431,7 +437,7 @@
 
 <style lang="postcss">
 	.toolbar {
-		@apply relative flex flex-nowrap items-center gap-x-1 gap-y-2 overflow-x-auto p-5 md:flex-wrap;
+		@apply relative flex  flex-wrap items-center gap-x-1 gap-y-2 p-5;
 	}
 	.separator {
 		@apply mx-3 h-8 w-[2px] bg-secondary;
