@@ -1,15 +1,11 @@
 <script lang="ts">
-	import type {
-		LexicalEditor,
-		NodeKey,
-	} from 'lexical';
+	import type { LexicalEditor, NodeKey } from 'lexical';
 	import { onMount } from 'svelte';
 	import { mergeRegister } from '@lexical/utils';
 	import {
 		$getNodeByKey as getNodeByKey,
 		$getSelection as getSelection,
 		$isNodeSelection as isNodeSelection,
-		$setSelection as setSelection,
 		CLICK_COMMAND,
 		COMMAND_PRIORITY_LOW,
 		KEY_BACKSPACE_COMMAND,
@@ -17,6 +13,7 @@
 	} from 'lexical';
 	import useNodeSelection from '../utils/useSelectedNode';
 	import { $isImageNode as isImageNode } from './ImageNode';
+	import { Loading } from '$lib/components/ui';
 
 	export let editor: LexicalEditor;
 	export let nodeKey: NodeKey;
@@ -27,20 +24,20 @@
 	export let width: 'inherit' | number;
 	export let title: string | undefined;
 
-	const imageCache = new Set();
+	let imageCache = new Set();
 
-	const suspenseImage = () => {
-		if (!imageCache.has(src)) {
-			throw new Promise((resolve) => {
-				const img = new Image();
-				img.src = src;
-				img.onload = () => {
-					imageCache.add(src);
-					resolve(null);
-				};
-			});
+	const suspenseImage = new Promise((resolve) => {
+		if (imageCache.has(src)) {
+			resolve(null);
+		} else {
+			const img = new Image();
+			img.src = src;
+			img.onload = () => {
+				imageCache.add(src);
+				resolve(null);
+			};
 		}
-	};
+	});
 
 	const [isSelected, setSelected, clearSelection] = useNodeSelection(editor, nodeKey);
 
@@ -62,9 +59,6 @@
 
 	onMount(() => {
 		mergeRegister(
-			editor.registerUpdateListener(({ editorState }) => {
-				setSelection(editorState.read(() => getSelection()));
-			}),
 			editor.registerCommand(
 				CLICK_COMMAND,
 				(payload) => {
@@ -87,8 +81,8 @@
 	});
 </script>
 
-{#await suspenseImage()}
-	<p>loading</p>
+{#await suspenseImage}
+	<Loading type="spinner" />
 {:then _}
 	<img
 		{src}

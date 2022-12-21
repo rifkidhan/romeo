@@ -17,3 +17,11 @@ export interface Blog {
 	meta_title: string;
 	meta_description: string;
 }
+
+export interface Galleries {
+	key: string;
+	bucket: string;
+	name: string;
+	content_type: string;
+	uploaded_at: string;
+}

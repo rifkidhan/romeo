@@ -22,10 +22,13 @@
 	 */
 	export let iconPosition: 'left' | 'right' | undefined = icons ? 'left' : undefined;
 
+	export let disabled = false;
+
 	export let ref: HTMLInputElement | undefined = undefined;
 	export let value: string | number = '';
 
-	let rootCN = cn('wrapper', [iconPosition], $$props.class);
+	let rootCN = cn('wrapper', [iconPosition], { ['disabledwrapper']: disabled }, $$props.class);
+	let inputCN = cn('input', { ['disabled']: disabled });
 </script>
 
 <span class={rootCN}>
@@ -37,8 +40,9 @@
 	<input
 		bind:value
 		bind:this={ref}
-		class="input"
+		class={inputCN}
 		id={id ? id : name}
+		{disabled}
 		{name}
 		autoComplete="off"
 		autoCorrect="off"
@@ -69,5 +73,9 @@
 	.wrapper:focus-within,
 	.input:focus {
 		@apply bg-primary outline-none;
+	}
+	.disabledwrapper,
+	.disabled {
+		@apply cursor-not-allowed border-accent-5 bg-accent-2 text-accent-2 opacity-50 grayscale;
 	}
 </style>

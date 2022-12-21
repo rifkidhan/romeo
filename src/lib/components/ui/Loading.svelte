@@ -1,5 +1,5 @@
 <script lang="ts">
-	export let type: 'dots' | 'spinner';
+	export let type: 'dots' | 'spinner' = 'dots';
 </script>
 
 {#if type === 'dots'}

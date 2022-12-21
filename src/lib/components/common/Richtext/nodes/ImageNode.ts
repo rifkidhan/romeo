@@ -58,24 +58,6 @@ export class ImageNode extends DecoratorNode<HTMLElement> {
 	__maxWidth: number;
 	__title: string | undefined;
 
-	constructor(
-		src: string,
-		altText: string,
-		maxWidth: number,
-		width?: 'inherit' | number,
-		height?: 'inherit' | number,
-		title?: string,
-		key?: NodeKey
-	) {
-		super(key);
-		this.__src = src;
-		this.__altText = altText;
-		this.__maxWidth = maxWidth;
-		this.__width = width || 'inherit';
-		this.__height = height || 'inherit';
-		this.__title = title;
-	}
-
 	static getType(): string {
 		return 'image';
 	}
@@ -127,6 +109,24 @@ export class ImageNode extends DecoratorNode<HTMLElement> {
 		return { element };
 	}
 
+	constructor(
+		src: string,
+		altText: string,
+		maxWidth: number,
+		width?: 'inherit' | number,
+		height?: 'inherit' | number,
+		title?: string,
+		key?: NodeKey
+	) {
+		super(key);
+		this.__src = src;
+		this.__altText = altText;
+		this.__maxWidth = maxWidth;
+		this.__width = width || 'inherit';
+		this.__height = height || 'inherit';
+		this.__title = title;
+	}
+
 	exportJSON(): SerializedImageNode {
 		return {
 			src: this.getSrc(),
@@ -145,16 +145,30 @@ export class ImageNode extends DecoratorNode<HTMLElement> {
 		writable.__width = width;
 	}
 
-	createDOM(config: EditorConfig): HTMLElement {
-		const img = document.createElement('img');
+	createDOM(config: EditorConfig, editor: LexicalEditor): HTMLElement {
+		const span = document.createElement('span');
 		const theme = config.theme;
 		const className = theme.image;
 
 		if (className !== undefined) {
-			img.className = className;
+			span.className = className;
 		}
 
-		return img;
+		new ImageComponent({
+			target: span,
+			props: {
+				editor,
+				src: this.__src,
+				width: this.__width,
+				height: this.__height,
+				altText: this.__altText,
+				nodeKey: this.__key,
+				maxWidth: this.__maxWidth,
+				title: this.__title
+			}
+		});
+
+		return span;
 	}
 
 	updateDOM(): false {
@@ -169,21 +183,8 @@ export class ImageNode extends DecoratorNode<HTMLElement> {
 		return this.__altText;
 	}
 
-	decorate(editor: LexicalEditor): HTMLElement {
-		const img = document.createElement('img');
-		new ImageComponent({
-			target: img,
-			props: {
-				editor,
-				src: this.__src,
-				width: this.__width,
-				height: this.__height,
-				altText: this.__altText,
-				nodeKey: this.__key,
-				maxWidth: this.__maxWidth,
-				title: this.__title
-			}
-		});
+	decorate(): HTMLElement {
+		const img = document.createElement('div');
 
 		return img;
 	}
@@ -191,11 +192,11 @@ export class ImageNode extends DecoratorNode<HTMLElement> {
 
 export const $createImageNode = ({
 	altText,
-	height,
+	height = 500,
 	maxWidth = 500,
 	title,
 	src,
-	width,
+	width = 500,
 	key
 }: ImagePayload): ImageNode => {
 	return $applyNodeReplacement(new ImageNode(src, altText, maxWidth, width, height, title, key));

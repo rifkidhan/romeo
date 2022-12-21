@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
+	import type { EditorConfig } from '$lib/types/lexical';
 	import Editor from './Editor.svelte';
 	import Toolbar from './Toolbar.svelte';
 	import RichtextPlugin from './plugins/RichtextPlugin.svelte';
@@ -13,7 +14,7 @@
 	import FloatingLinkPlugin from './plugins/link/FloatingLinkPlugin.svelte';
 	import AutofocusPlugin from './plugins/AutofocusPlugin.svelte';
 	import HorizontalRulePlugin from './plugins/HorizontalRulePlugin.svelte';
-	import ImagePlugin from './plugins/ImagePlugin.svelte';
+	import ImagePlugin from './plugins/image/ImagePlugin.svelte';
 	import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 	import { ListItemNode, ListNode } from '@lexical/list';
 	import { LinkNode, AutoLinkNode } from '@lexical/link';
@@ -26,10 +27,10 @@
 	const dispatch = createEventDispatcher();
 
 	let htmlString: string | undefined = undefined;
-	export let editable: boolean | undefined = undefined;
+	export let editable: boolean | undefined = false;
 	let ref: HTMLElement;
 
-	const config = {
+	let config = {
 		editable,
 		theme,
 		namespace: 'RomeoRichText',

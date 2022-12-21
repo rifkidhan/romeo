@@ -24,8 +24,12 @@
 	$: btnClass = cn(
 		'root',
 		variant,
-		(disabled && 'disabled') || (disabled && variant === 'circle' && 'disabledCircle'),
-		loading && 'loading',
+		{
+			['disabled']: disabled,
+			['disabledCircle']: disabled && variant === 'circle',
+			['loading']: loading
+		},
+
 		(icons && iconPosition === 'right' && 'iconRight') ||
 			(icons && iconPosition === 'left' && 'iconLeft'),
 		$$props.class

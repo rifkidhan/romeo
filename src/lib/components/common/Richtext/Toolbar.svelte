@@ -24,7 +24,8 @@
 	} from '@lexical/rich-text';
 	import {
 		$getNearestNodeOfType as getNearestNodeOfType,
-		$findMatchingParent as findMatchingParent
+		$findMatchingParent as findMatchingParent,
+		mergeRegister
 	} from '@lexical/utils';
 	import {
 		ListNode,
@@ -47,6 +48,7 @@
 	import getSelectedNode from './utils/getSelectedNode';
 	import { sanitizeUrl } from './utils/url';
 	import { floatingLink } from './utils/storeAction';
+	import { activeModal } from '$lib/stores/ui';
 
 	const editor = getContext<LexicalEditor>('editor');
 
@@ -73,6 +75,7 @@
 	let blockType = 'paragraph';
 	let canUndo = false;
 	let canRedo = false;
+	let isEditable = editor.isEditable();
 
 	$: updateState = () => {
 		const selection = getSelection();
@@ -234,26 +237,31 @@
 	};
 
 	onMount(() => {
-		editor.registerUpdateListener(({ editorState }) => {
-			editorState.read(() => {
-				updateState();
-			});
-		});
-		editor.registerCommand(
-			CAN_UNDO_COMMAND,
-			(payload) => {
-				canUndo = payload;
-				return false;
-			},
-			COMMAND_PRIORITY_CRITICAL
-		);
-		editor.registerCommand(
-			CAN_REDO_COMMAND,
-			(payload) => {
-				canRedo = payload;
-				return false;
-			},
-			COMMAND_PRIORITY_CRITICAL
+		mergeRegister(
+			editor.registerEditableListener((editable) => {
+				isEditable = editable;
+			}),
+			editor.registerUpdateListener(({ editorState }) => {
+				editorState.read(() => {
+					updateState();
+				});
+			}),
+			editor.registerCommand(
+				CAN_UNDO_COMMAND,
+				(payload) => {
+					canUndo = payload;
+					return false;
+				},
+				COMMAND_PRIORITY_CRITICAL
+			),
+			editor.registerCommand(
+				CAN_REDO_COMMAND,
+				(payload) => {
+					canRedo = payload;
+					return false;
+				},
+				COMMAND_PRIORITY_CRITICAL
+			)
 		);
 	});
 
@@ -261,12 +269,14 @@
 		{
 			id: 'undo',
 			name: 'Undo Command',
-			command: () => editor.dispatchCommand(UNDO_COMMAND, undefined)
+			command: () => editor.dispatchCommand(UNDO_COMMAND, undefined),
+			disabled: canUndo
 		},
 		{
 			id: 'redo',
 			name: 'Redo Command',
-			command: () => editor.dispatchCommand(REDO_COMMAND, undefined)
+			command: () => editor.dispatchCommand(REDO_COMMAND, undefined),
+			disabled: canRedo
 		}
 	];
 
@@ -380,6 +390,13 @@
 			id: 'separator',
 			name: 'Add Separator',
 			command: () => editor.dispatchCommand(INSERT_HORIZONTAL_RULE_COMMAND, undefined)
+		},
+		{
+			id: 'image',
+			name: 'Add Image',
+			command: () => {
+				activeModal.set('image-plugin-lexical');
+			}
 		}
 	];
 </script>
@@ -389,6 +406,7 @@
 		<Button
 			type="button"
 			variant="circle"
+			disabled={!isEditable || !essential.disabled}
 			on:click={essential.command}
 			aria-label={essential.name}
 			title={essential.name}
@@ -411,6 +429,7 @@
 				type="button"
 				variant="circle"
 				on:click={block.command}
+				disabled={!isEditable}
 				aria-label={block.name}
 				title={block.name}
 				class={block.active ? 'bg-secondary hover:!shadow-red-down' : ''}
@@ -426,6 +445,7 @@
 			type="button"
 			variant="circle"
 			on:click={inline.command}
+			disabled={!isEditable}
 			aria-label={inline.name}
 			title={inline.name}
 			class={inline.active ? 'w-10 bg-secondary hover:!shadow-red-down' : 'w-10'}

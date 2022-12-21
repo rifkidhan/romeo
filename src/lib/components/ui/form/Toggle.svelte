@@ -9,12 +9,19 @@
 	export let checked: boolean | undefined = false;
 	export let value: string | number = '';
 	export let group: (string | number)[] = [];
+	export let disabled = false;
 
 	const isChecked = spring(0);
 
-	$: $isChecked = checked ? 100 : 0;
+	$: $isChecked = checked && !disabled ? 100 : 0;
 
-	$: className = cn('root', { [`${variant}`]: checked }, [`${size}`], $$props.class);
+	$: className = cn(
+		'root',
+		{ [`${variant}`]: checked && !disabled },
+		[`${size}`],
+		{ ['disabled']: disabled },
+		$$props.class
+	);
 </script>
 
 <span
@@ -35,6 +42,7 @@
 		bind:group
 		{...$$restProps}
 		class="hidden"
+		{disabled}
 	/>
 	<span class={cn('circle', [`circle-${size}`])} style:transform="translateX({$isChecked}%)">
 		<span class="inner" />
@@ -53,6 +61,9 @@
 	}
 	.checked {
 		@apply translate-x-9;
+	}
+	.disabled {
+		@apply cursor-not-allowed bg-accent-4 opacity-50 grayscale;
 	}
 	.red {
 		@apply bg-red;

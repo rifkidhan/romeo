@@ -1,9 +1,9 @@
 <script lang="ts">
-	import { onMount, onDestroy } from 'svelte';
+	import { onMount, onDestroy, createEventDispatcher } from 'svelte';
 	import { scale } from 'svelte/transition';
 	import { cubicInOut } from 'svelte/easing';
 	import { Button } from '$lib/components/ui';
-	import { displayModal, activeModal } from '$lib/stores/ui';
+	import { activeModal } from '$lib/stores/ui';
 	import {
 		disableBodyScroll,
 		clearAllBodyScrollLocks,
@@ -14,8 +14,11 @@
 	let modalRef: HTMLDivElement;
 	let modalInner: HTMLDivElement;
 
+	const dispatch = createEventDispatcher();
+
 	const closeModal = () => {
-		$displayModal = false;
+		activeModal.set(null);
+		dispatch('closed');
 	};
 
 	const onKeydown = (e: KeyboardEvent) => {
@@ -31,7 +34,6 @@
 
 	onDestroy(() => {
 		clearAllBodyScrollLocks();
-		activeModal.set('');
 	});
 </script>
 
@@ -45,8 +47,8 @@
 			</span>
 			<Button type="button" icons="x" variant="circle" on:click={closeModal} />
 		</div>
-		<div class="w-full bg-secondary h-[2px]" />
-		<div class="flex flex-col gap-5 p-3">
+		<div class="divider" />
+		<div class="content">
 			<slot />
 		</div>
 	</div>
@@ -54,12 +56,18 @@
 
 <style lang="postcss">
 	.root {
-		@apply container fixed inset-0 z-[101] mx-auto flex h-full w-full items-center justify-center overflow-y-auto;
+		@apply fixed inset-0 z-[101] box-border flex h-full w-full items-center justify-center;
+	}
+	.modal {
+		@apply relative flex max-h-screen flex-col gap-3 rounded-xl border-2 border-secondary bg-primary;
 	}
 	.top {
 		@apply inline-flex w-full items-center justify-between gap-5 p-3;
 	}
-	.modal {
-		@apply relative flex flex-col rounded-xl border-2 border-secondary bg-primary;
+	.divider {
+		@apply h-[2px] w-full bg-secondary;
+	}
+	.content {
+		@apply flex flex-col gap-5 overflow-y-auto p-3;
 	}
 </style>

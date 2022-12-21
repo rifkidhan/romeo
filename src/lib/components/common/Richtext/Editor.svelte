@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { LexicalEditor } from 'lexical';
 	import { onMount, setContext } from 'svelte';
 	import { createEditor } from 'lexical';
 
@@ -7,8 +8,7 @@
 
 	let contentEditable: HTMLDivElement;
 
-	const editor = createEditor(config);
-
+	const editor: LexicalEditor = createEditor(config);
 	setContext('editor', editor);
 
 	onMount(() => {
@@ -42,6 +42,6 @@
 		@apply h-[2px] w-full bg-secondary;
 	}
 	.contenteditable {
-		@apply mx-auto max-h-[120vh] min-h-[10rem] w-full overflow-y-auto overscroll-y-auto whitespace-pre-wrap break-words p-5 focus:outline-none;
+		@apply mx-auto max-h-[120vh] min-h-[20rem] w-full overflow-y-auto overscroll-y-auto whitespace-pre-wrap break-words p-5 focus:outline-none;
 	}
 </style>

@@ -1,5 +1,5 @@
-import { fail } from '@sveltejs/kit';
-import { blogs, deta } from '$lib/server/deta';
+import { fail, redirect } from '@sveltejs/kit';
+import { blogs, deta, galleries } from '$lib/server/deta';
 import slugify from '$lib/utils/slugify';
 import type { Actions } from './$types';
 
@@ -31,7 +31,7 @@ export const actions: Actions = {
 		const contentType = thumbnail.type;
 		const type = contentType.split('/').pop();
 		const file = await thumbnail.arrayBuffer();
-		const thumbnailName = `${slug}-${Math.random()}.${type}`;
+		const thumbnailName = `${slug ? slug : slugify(title)}-${Math.random()}.${type}`;
 		const imageUpload = deta.Drive('blogs');
 
 		try {
@@ -39,10 +39,16 @@ export const actions: Actions = {
 				data: Buffer.from(file),
 				contentType
 			});
-			if (!image) {
+			const galleriesDB = await galleries.put({
+				bucket: 'blogs',
+				name: thumbnailName,
+				content_type: contentType,
+				uploaded_at: new Date().toISOString()
+			});
+			if (!image || !galleriesDB) {
 				return fail(400, { uploadImage: false });
 			}
-			await blogs.put({
+			const postBlogs = await blogs.put({
 				title,
 				description,
 				content,
@@ -52,9 +58,12 @@ export const actions: Actions = {
 				meta_title: metatitle ? metatitle : title,
 				meta_description: metadescription ? metadescription : description
 			});
-			return { success: true };
+
+			if (postBlogs) {
+				throw redirect(302, '/blogs');
+			}
 		} catch {
-			return fail(400);
+			throw fail(400);
 		}
 	}
 };

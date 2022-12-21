@@ -6,6 +6,8 @@
 	export let id: string | undefined = undefined;
 	export let value = '';
 	export let files: FileList | undefined = undefined;
+	export let loading: boolean | undefined = undefined;
+	export let disabled: boolean | undefined = undefined;
 
 	let input: HTMLInputElement;
 
@@ -16,7 +18,12 @@
 		}
 	};
 
-	$: className = cn('dropzone', $$props.class, $$slots.preview && files ? 'preview' : 'h-64');
+	$: className = cn(
+		'dropzone',
+		{ ['disabled']: disabled, ['skeleton loading']: loading },
+		$$props.class,
+		$$slots.preview && files ? 'preview' : 'h-64'
+	);
 </script>
 
 <label
@@ -51,6 +58,7 @@
 		bind:value
 		bind:files
 		bind:this={input}
+		disabled={disabled || loading}
 		type="file"
 		class="hidden"
 		on:change
@@ -64,5 +72,11 @@
 	}
 	.preview {
 		@apply h-auto overflow-hidden;
+	}
+	.disabled {
+		@apply cursor-not-allowed border-accent-5 bg-accent-2 text-accent-2 opacity-50 grayscale;
+	}
+	.loading {
+		@apply cursor-not-allowed hover:bg-accent-1;
 	}
 </style>

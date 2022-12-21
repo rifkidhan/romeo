@@ -1,3 +1,4 @@
+import type { LexicalEditor, EditorThemeClasses, Klass, LexicalNode } from 'lexical';
 import type { LinkAttributes } from '@lexical/link';
 
 export type ChangeHandler = (url: string | null, prevUrl: string | null) => void;
@@ -13,3 +14,19 @@ export type LinkMatcherResult = {
 export type LinkMatcher = (text: string) => LinkMatcherResult | null;
 
 export type ValidateUrl = (url: string) => boolean;
+
+export type EditorConfig = {
+	namespace: string;
+	nodes?: ReadonlyArray<
+		| Klass<LexicalNode>
+		| {
+				replace: Klass<LexicalNode>;
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				with: <T extends { new (...args: any): any }>(node: InstanceType<T>) => LexicalNode;
+		  }
+	>;
+	onError?: (error: Error) => void;
+	parentEditor?: LexicalEditor | undefined;
+	editable?: boolean | undefined;
+	theme?: EditorThemeClasses | undefined;
+};

@@ -80,13 +80,7 @@ export class HorizontalRuleNode extends DecoratorNode<HTMLElement> {
 
 	decorate(editor: LexicalEditor): HTMLElement {
 		const thishr = document.createElement('hr');
-		new HorizontalRuleComponent({
-			target: thishr,
-			props: {
-				editor,
-				key: this.__key
-			}
-		});
+		new HorizontalRuleComponent({ target: thishr, props: { editor, key: this.__key } });
 
 		return thishr;
 	}
