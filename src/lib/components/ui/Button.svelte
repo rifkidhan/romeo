@@ -15,7 +15,7 @@
 
 	$: buttonProps = {
 		href,
-		'aria-pressed': active,
+		'aria-pressed': component === 'button' && active,
 		'data-variant': variant,
 		disabled,
 		type: component === 'button' ? type : undefined
@@ -29,7 +29,6 @@
 			['disabledCircle']: disabled && variant === 'circle',
 			['loading']: loading
 		},
-
 		(icons && iconPosition === 'right' && 'iconRight') ||
 			(icons && iconPosition === 'left' && 'iconLeft'),
 		$$props.class
@@ -38,8 +37,8 @@
 
 <svelte:element
 	this={component}
-	{...buttonProps}
 	{...$$restProps}
+	{...buttonProps}
 	class={btnClass}
 	on:click
 	on:mouseenter

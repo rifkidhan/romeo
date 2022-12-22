@@ -65,32 +65,10 @@
 	@apply text-blue-1;
 }
 .lexical__code {
-	background-color: rgb(240, 242, 245);
-	font-family: Menlo, Consolas, Monaco, monospace;
-	display: block;
-	padding: 8px 8px 8px 52px;
-	line-height: 1.53;
-	font-size: 13px;
-	margin: 0;
-	margin-top: 8px;
-	margin-bottom: 8px;
-	tab-size: 2;
-	/* white-space: pre; */
-	overflow-x: auto;
-	position: relative;
+	@apply relative my-2 block overflow-x-auto break-normal rounded-xl bg-syntax-3 p-5 pl-14 text-left font-mono text-syntax-4;
 }
 .lexical__code:before {
-	content: attr(data-gutter);
-	position: absolute;
-	background-color: #eee;
-	left: 0;
-	top: 0;
-	border-right: 1px solid #ccc;
-	padding: 8px;
-	color: #777;
-	white-space: pre-wrap;
-	text-align: right;
-	min-width: 25px;
+	@apply absolute left-0 top-0 min-w-[25px] whitespace-pre-wrap border-r-2 border-red bg-accent-2 py-5 px-2 text-right text-accent-5 content-[attr(data-gutter)];
 }
 .lexical__table {
 	border-collapse: collapse;
@@ -253,140 +231,95 @@
 	background-color: #ffbbbb !important;
 }
 .lexical__ol1 {
-	padding: 0;
-	margin: 0;
-	margin-left: 16px;
-	list-style-position: inside;
+	@apply ml-4 list-inside;
 }
 .lexical__ol2 {
-	padding: 0;
-	margin: 0;
-	margin-left: 16px;
+	@apply ml-4 list-inside;
 	list-style-type: upper-alpha;
-	list-style-position: inside;
 }
 .lexical__ol3 {
-	padding: 0;
-	margin: 0;
-	margin-left: 16px;
+	@apply ml-4 list-inside;
 	list-style-type: lower-alpha;
-	list-style-position: inside;
 }
 .lexical__ol4 {
-	padding: 0;
-	margin: 0;
-	margin-left: 16px;
+	@apply ml-4 list-inside;
 	list-style-type: upper-roman;
-	list-style-position: inside;
 }
 .lexical__ol5 {
-	padding: 0;
-	margin: 0;
-	margin-left: 16px;
+	@apply ml-4 list-inside;
 	list-style-type: lower-roman;
-	list-style-position: inside;
 }
 .lexical__ul {
-	padding: 0;
-	margin: 0;
-	margin-left: 16px;
-	list-style-position: inside;
+	@apply ml-4 list-inside;
 }
 .lexical__listItem {
-	margin: 0 32px;
+	@apply mx-9;
 }
 .lexical__listItemChecked,
 .lexical__listItemUnchecked {
-	position: relative;
-	margin-left: 8px;
-	margin-right: 8px;
-	padding-left: 24px;
-	padding-right: 24px;
-	list-style-type: none;
-	outline: none;
+	@apply relative mx-2 list-none px-6 outline-none;
 }
 .lexical__listItemChecked {
-	text-decoration: line-through;
+	@apply line-through;
 }
 .lexical__listItemUnchecked:before,
 .lexical__listItemChecked:before {
-	content: '';
-	width: 16px;
-	height: 16px;
-	top: 2px;
-	left: 0;
-	cursor: pointer;
-	display: block;
-	background-size: cover;
-	position: absolute;
+	@apply absolute top-[2px] left-0 block h-4 w-4 cursor-pointer bg-cover content-[''];
 }
 .lexical__listItemUnchecked[dir='rtl']:before,
 .lexical__listItemChecked[dir='rtl']:before {
-	left: auto;
-	right: 0;
+	@apply left-auto right-0;
 }
 .lexical__listItemUnchecked:focus:before,
 .lexical__listItemChecked:focus:before {
-	box-shadow: 0 0 0 2px #a6cdfe;
-	border-radius: 2px;
+	@apply shadow-down-1;
 }
 .lexical__listItemUnchecked:before {
-	border: 1px solid #999;
-	border-radius: 2px;
+	@apply rounded-full border border-secondary;
 }
 .lexical__listItemChecked:before {
-	border: 1px solid rgb(61, 135, 245);
-	border-radius: 2px;
-	background-color: #3d87f5;
-	background-repeat: no-repeat;
+	@apply rounded-full border-2 border-secondary bg-yellow-1 bg-no-repeat;
 }
 .lexical__listItemChecked:after {
-	content: '';
-	cursor: pointer;
-	border-color: #fff;
-	border-style: solid;
-	position: absolute;
-	display: block;
+	@apply absolute block rotate-45 cursor-pointer border-r-2 border-b-2 border-secondary content-[''];
 	top: 6px;
 	width: 3px;
 	left: 7px;
 	right: 7px;
 	height: 6px;
-	transform: rotate(45deg);
-	border-width: 0 2px 2px 0;
 }
 .lexical__nestedListItem {
-	list-style-type: none;
+	@apply list-none;
 }
 .lexical__nestedListItem:before,
 .lexical__nestedListItem:after {
-	display: none;
+	@apply hidden;
 }
 .lexical__tokenComment {
-	color: slategray;
+	@apply text-syntax-8;
 }
 .lexical__tokenPunctuation {
-	color: #999;
+	@apply text-blue;
 }
 .lexical__tokenProperty {
-	color: #905;
+	@apply text-syntax-9;
 }
 .lexical__tokenSelector {
-	color: #690;
+	@apply text-syntax-10;
 }
 .lexical__tokenOperator {
-	color: #9a6e3a;
+	@apply text-syntax-11;
 }
 .lexical__tokenAttr {
-	color: #07a;
+	@apply text-syntax-15;
 }
 .lexical__tokenVariable {
-	color: #e90;
+	@apply text-syntax-13;
 }
 .lexical__tokenFunction {
-	color: #dd4a68;
+	@apply text-syntax-14;
 }
-.lexical__mark {
+/* .lexical__mark {
 	background: rgba(255, 212, 0, 0.14);
 	border-bottom: 2px solid rgba(255, 212, 0, 0.3);
 	padding-bottom: 2px;
@@ -402,10 +335,19 @@
 .lexical__markOverlap.selected {
 	background: rgba(255, 212, 0, 0.7);
 	border-bottom: 2px solid rgba(255, 212, 0, 0.7);
-}
+} */
 .lexical__embedBlock {
-	user-select: none;
+	@apply select-none;
 }
 .lexical__embedBlockFocus {
 	outline: 2px solid rgb(60, 132, 244);
+}
+.editor-image {
+	@apply relative block w-full max-w-full;
+}
+.editor-hr-element {
+	@apply my-4 cursor-pointer border-none p-1;
+	&:after {
+		@apply block h-[2px] bg-secondary content-[''];
+	}
 }

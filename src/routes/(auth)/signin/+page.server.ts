@@ -1,6 +1,7 @@
 import { fail } from '@sveltejs/kit';
 import { auth } from '$lib/server/lucia';
 import type { Actions } from './$types';
+import { randomUUID as v4 } from 'crypto';
 
 export const actions: Actions = {
 	default: async ({ request, locals }) => {
@@ -17,7 +18,7 @@ export const actions: Actions = {
 			const session = await auth.createSession(user.userId);
 			locals.setSession(session);
 		} catch {
-			return fail(400);
+			return fail(400, { username, password, invalidcredential: true });
 		}
 	}
 };

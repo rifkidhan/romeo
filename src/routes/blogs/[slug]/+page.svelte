@@ -18,7 +18,7 @@
 	<h1>
 		{blog.title}
 	</h1>
-	<article class="prose max-w-none container mx-auto">
+	<article class="container mx-auto">
 		{@html blog.content}
 	</article>
 </div>

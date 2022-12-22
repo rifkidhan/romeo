@@ -7,3 +7,5 @@ export { default as Card } from './Card.svelte';
 export { default as Modal } from './Modal.svelte';
 export * from './dropdown';
 export * from './form';
+export { default as Note } from './Note.svelte';
+export { default as Progress } from './Progress.svelte';

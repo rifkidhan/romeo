@@ -50,12 +50,12 @@ const theme: EditorThemeClasses = {
 	},
 	hashtag: 'lexical__hashtag',
 	heading: {
-		h1: 'h1',
-		h2: 'h2',
-		h3: 'h3',
-		h4: 'h4',
-		h5: 'h5',
-		h6: 'h6'
+		h1: 'lexical__h1',
+		h2: 'lexical__h2',
+		h3: 'lexical__h3',
+		h4: 'lexical__h4',
+		h5: 'lexical__h5',
+		h6: 'lexical__h6'
 	},
 	image: 'editor-image',
 	link: 'lexical__link',
@@ -66,14 +66,8 @@ const theme: EditorThemeClasses = {
 		nested: {
 			listitem: 'lexical__nestedListItem'
 		},
-		olDepth: [
-			'list-inside list-decimal',
-			'lexical__ol2',
-			'lexical__ol3',
-			'lexical__ol4',
-			'lexical__ol5'
-		],
-		ul: 'list-disc list-inside'
+		olDepth: ['lexical__ol1', 'lexical__ol2', 'lexical__ol3', 'lexical__ol4', 'lexical__ol5'],
+		ul: 'lexical__ul'
 	},
 	ltr: 'lexical__ltr',
 	mark: 'lexical__mark',
@@ -96,14 +90,14 @@ const theme: EditorThemeClasses = {
 	tableResizeRuler: 'lexical__tableCellResizeRuler',
 	tableSelected: 'lexical__tableSelected',
 	text: {
-		bold: 'font-bold',
+		bold: 'lexical__textBold',
 		code: 'lexical__textCode',
-		italic: 'italic',
-		strikethrough: 'line-through decoration-2',
+		italic: 'lexical__textItalic',
+		strikethrough: 'lexical__textStrikethrough',
 		subscript: 'lexical__textSubscript',
 		superscript: 'lexical__textSuperscript',
-		underline: 'underline decoration-2',
-		underlineStrikethrough: 'underline line-through'
+		underline: 'lexical__textUnderline',
+		underlineStrikethrough: 'lexical__textUnderlineStrikethrough'
 	}
 };
 

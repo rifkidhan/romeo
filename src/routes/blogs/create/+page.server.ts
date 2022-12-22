@@ -1,30 +1,38 @@
 import { fail, redirect } from '@sveltejs/kit';
 import { blogs, deta, galleries } from '$lib/server/deta';
 import slugify from '$lib/utils/slugify';
-import type { Actions } from './$types';
+import type { Actions, PageServerLoad } from './$types';
+
+export const load = (async ({ locals }) => {
+	const session = await locals.validate();
+
+	if (!session) {
+		throw redirect(302, '/');
+	}
+
+	return {};
+}) satisfies PageServerLoad;
 
 export const actions: Actions = {
 	default: async ({ request }) => {
 		const form = await request.formData();
-		const title = form.get('title');
-		const description = form.get('description');
+		const title = form.get('title') as string;
+		const description = form.get('description') as string;
 		const published = form.get('published');
-		const slug = form.get('slug');
+		const slug = form.get('slug') as string;
 		const thumbnail = form.get('thumbnail') as File;
-		const content = form.get('content');
+		const content = form.get('content') as string;
 		const metatitle = form.get('metatitle');
 		const metadescription = form.get('metadescription');
+		const authorId = form.get('authorId') as string;
+		const createdAt = form.get('created_at') as string;
+		const updatedAt = form.get('updated_at') as string;
 
 		if (
-			!title ||
-			!description ||
-			!content ||
-			typeof title !== 'string' ||
-			typeof description !== 'string' ||
-			typeof content !== 'string' ||
 			typeof metatitle !== 'string' ||
 			typeof metadescription !== 'string' ||
-			typeof slug !== 'string'
+			typeof slug !== 'string' ||
+			typeof authorId !== 'string'
 		) {
 			return fail(400);
 		}
@@ -35,19 +43,16 @@ export const actions: Actions = {
 		const imageUpload = deta.Drive('blogs');
 
 		try {
-			const image = await imageUpload.put(thumbnailName, {
+			await imageUpload.put(thumbnailName, {
 				data: Buffer.from(file),
 				contentType
 			});
-			const galleriesDB = await galleries.put({
+			await galleries.put({
 				bucket: 'blogs',
 				name: thumbnailName,
 				content_type: contentType,
-				uploaded_at: new Date().toISOString()
+				uploaded_at: createdAt
 			});
-			if (!image || !galleriesDB) {
-				return fail(400, { uploadImage: false });
-			}
 			const postBlogs = await blogs.put({
 				title,
 				description,
@@ -56,7 +61,10 @@ export const actions: Actions = {
 				thumbnail: thumbnail ? thumbnailName : null,
 				slug: slug ? slug : slugify(title),
 				meta_title: metatitle ? metatitle : title,
-				meta_description: metadescription ? metadescription : description
+				authorId,
+				meta_description: metadescription ? metadescription : description,
+				created_at: createdAt,
+				updated_at: updatedAt
 			});
 
 			if (postBlogs) {

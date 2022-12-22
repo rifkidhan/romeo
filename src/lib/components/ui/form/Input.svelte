@@ -22,10 +22,20 @@
 	 */
 	export let iconPosition: 'left' | 'right' | undefined = icons ? 'left' : undefined;
 
+	/**
+	 * Disable Input. Default is false.
+	 */
 	export let disabled = false;
 
+	/**
+	 * Element reference.
+	 */
 	export let ref: HTMLInputElement | undefined = undefined;
-	export let value: string | number = '';
+
+	/**
+	 * Value for binding input.
+	 */
+	export let value: string | number | any = '';
 
 	let rootCN = cn('wrapper', [iconPosition], { ['disabledwrapper']: disabled }, $$props.class);
 	let inputCN = cn('input', { ['disabled']: disabled });

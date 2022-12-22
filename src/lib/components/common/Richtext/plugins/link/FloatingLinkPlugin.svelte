@@ -212,7 +212,7 @@
 					href={linkUrl}
 					target="_blank"
 					rel="noopener noreferrer"
-					class="whitespace-nowrap w-4/5 overflow-hidden text-ellipsis"
+					class="whitespace-nowrap text-secondary w-4/5 overflow-hidden text-ellipsis"
 				>
 					{linkUrl}
 				</a>
@@ -230,6 +230,6 @@
 
 <style lang="postcss">
 	.input {
-		@apply flex w-64 items-center justify-between gap-1 p-1 md:w-96 md:gap-2 md:p-2;
+		@apply flex w-64 items-center justify-between gap-1 p-1  md:w-96 md:gap-2 md:p-2;
 	}
 </style>

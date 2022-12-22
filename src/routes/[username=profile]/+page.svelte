@@ -1,18 +1,11 @@
 <script lang="ts">
+	import type { PageData } from './$types';
 	import { Button } from '$lib/components/ui';
 	import { signOut, getUser } from '@lucia-auth/sveltekit/client';
 
 	import { invalidateAll } from '$app/navigation';
 
-	const user = getUser();
-
-	const signOutHandler = async () => {
-		await signOut();
-		invalidateAll();
-	};
+	// export let data: PageData;
 </script>
 
-<h1>
-	Hello {$user?.username}
-</h1>
-<Button on:click={signOutHandler}>Sign Out</Button>
+<h2>Profile Page</h2>

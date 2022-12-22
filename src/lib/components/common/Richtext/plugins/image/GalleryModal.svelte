@@ -66,7 +66,7 @@
 	{#if mode === 'upload'}
 		<div>
 			<Field htmlFor="lexical-image-upload" label="Upload image">
-				<Dropzone name="lexical-image-upload" bind:files loading>
+				<Dropzone name="lexical-image-upload" bind:files {loading}>
 					<img
 						src={filePreview}
 						slot="preview"

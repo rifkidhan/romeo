@@ -3,12 +3,14 @@ import type { Adapter } from 'lucia-auth';
 import { getUpdateData } from 'lucia-auth/adapter';
 import { Deta } from 'deta';
 import { convertSession, convertUser, type DetaUser, type DetaSession } from './utils';
+import { randomUUID as v4 } from 'crypto';
 
 /* eslint-disable-next-line */
 const adapter = (projectKey: string, errorHandler: (error: any) => void = () => {}): Adapter => {
 	const deta = Deta(projectKey);
 	const User = deta.Base('user');
 	const Session = deta.Base('session');
+	const Profile = deta.Base('profile');
 
 	return {
 		getUser: async (userId) => {
@@ -79,11 +81,24 @@ const adapter = (projectKey: string, errorHandler: (error: any) => void = () => 
 			if (checkifProviderExist.count > 0) throw new LuciaError('AUTH_DUPLICATE_PROVIDER_ID');
 			try {
 				if (userId === null) {
-					const user = await User.put({
-						hashed_password: data.hashedPassword,
-						provider_id: data.providerId,
-						...data.attributes
-					});
+					const key = v4();
+					const user = await User.put(
+						{
+							hashed_password: data.hashedPassword,
+							provider_id: data.providerId,
+							...data.attributes
+						},
+						key
+					);
+					if (user) {
+						await Profile.put(
+							{
+								userId: key,
+								...data.attributes
+							},
+							v4()
+						);
+					}
 					return convertUser(user);
 				}
 				const user = await User.put(
@@ -92,8 +107,15 @@ const adapter = (projectKey: string, errorHandler: (error: any) => void = () => 
 						provider_id: data.providerId,
 						...data.attributes
 					},
-					userId as string
+					userId
 				);
+				if (user) {
+					await Profile.put({
+						userId: userId,
+						...data.attributes
+					});
+				}
+
 				return convertUser(user);
 			} catch (e) {
 				errorHandler(e);

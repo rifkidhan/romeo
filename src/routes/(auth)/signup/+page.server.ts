@@ -9,16 +9,23 @@ export const actions: Actions = {
 		const username = form.get('username');
 		const email = form.get('email');
 		const password = form.get('password');
+		const confirmPassword = form.get('retype-password');
 
 		if (
 			!username ||
 			!password ||
 			!email ||
+			!confirmPassword ||
 			typeof username !== 'string' ||
 			typeof password !== 'string' ||
+			typeof confirmPassword !== 'string' ||
 			typeof email !== 'string'
 		) {
 			return fail(400);
+		}
+
+		if (password !== confirmPassword) {
+			return fail(400, { email, username, password, confirmPassword, invalidPassword: true });
 		}
 
 		const user = await deta.Base('user').fetch({
@@ -31,11 +38,12 @@ export const actions: Actions = {
 		}
 
 		try {
-			const user = await auth.createUser('username', username, {
+			const user = await auth.createUser('username', username.toLowerCase(), {
 				password,
 				attributes: {
-					username,
-					email
+					username: username.toLowerCase(),
+					email,
+					role: 'user'
 				}
 			});
 			const session = await auth.createSession(user.userId);

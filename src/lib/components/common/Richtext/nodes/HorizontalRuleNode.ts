@@ -5,7 +5,8 @@ import type {
 	DOMConversionMap,
 	DOMConversionOutput,
 	DOMExportOutput,
-	LexicalEditor
+	LexicalEditor,
+	EditorConfig
 } from 'lexical';
 import { createCommand, DecoratorNode, $applyNodeReplacement } from 'lexical';
 import HorizontalRuleComponent from './HorizontalRuleComponent.svelte';
@@ -42,7 +43,7 @@ export class HorizontalRuleNode extends DecoratorNode<HTMLElement> {
 
 	static importDOM(): DOMConversionMap | null {
 		return {
-			hr: () => ({
+			hr: (node: Node) => ({
 				conversion: convertHorizontalRuleElement,
 				priority: 0
 			})
@@ -63,7 +64,9 @@ export class HorizontalRuleNode extends DecoratorNode<HTMLElement> {
 	}
 
 	createDOM(): HTMLElement {
-		return document.createElement('hr');
+		const hr = document.createElement('hr');
+
+		return hr;
 	}
 
 	getTextContent(): '\n' {
@@ -79,10 +82,9 @@ export class HorizontalRuleNode extends DecoratorNode<HTMLElement> {
 	}
 
 	decorate(editor: LexicalEditor): HTMLElement {
-		const thishr = document.createElement('hr');
-		new HorizontalRuleComponent({ target: thishr, props: { editor, key: this.__key } });
-
-		return thishr;
+		const hr = document.createElement('hr');
+		new HorizontalRuleComponent({ target: hr, props: { editor, key: this.__key } });
+		return hr;
 	}
 }
 

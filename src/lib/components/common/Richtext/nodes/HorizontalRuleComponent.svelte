@@ -36,7 +36,7 @@
 	};
 
 	onMount(() => {
-		mergeRegister(
+		return mergeRegister(
 			editor.registerCommand(
 				CLICK_COMMAND,
 				(e: MouseEvent) => {
@@ -60,4 +60,10 @@
 			editor.registerCommand(KEY_BACKSPACE_COMMAND, onDelete, COMMAND_PRIORITY_LOW)
 		);
 	});
+
+	let hrElem = editor.getElementByKey(key);
+
+	$: if (hrElem !== null) {
+		hrElem.className = 'editor-hr-element';
+	}
 </script>

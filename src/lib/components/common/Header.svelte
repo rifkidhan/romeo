@@ -8,7 +8,7 @@
 	let prevScroll = 0;
 
 	const onScroll = throttle(() => {
-		visible = (prevScroll > currScroll && prevScroll - currScroll > 20) || currScroll < 200;
+		visible = (prevScroll > currScroll && prevScroll - currScroll > 20) || currScroll < 100;
 
 		prevScroll = currScroll;
 	}, 50);
@@ -16,7 +16,7 @@
 
 <svelte:window bind:scrollY={currScroll} on:scroll={onScroll} />
 
-<header class:isHidden={!visible} class={currScroll > 200 ? 'fixed' : 'sticky'}>
+<header class:isHidden={!visible} class={currScroll > 100 ? 'fixed' : 'sticky'}>
 	<div class="wrapper">
 		<a href="/" class="home" title="Home Page">
 			<Logo variant="mark" class="w-12 md:w-14" />

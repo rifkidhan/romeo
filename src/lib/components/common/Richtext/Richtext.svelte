@@ -15,6 +15,7 @@
 	import AutofocusPlugin from './plugins/AutofocusPlugin.svelte';
 	import HorizontalRulePlugin from './plugins/HorizontalRulePlugin.svelte';
 	import ImagePlugin from './plugins/image/ImagePlugin.svelte';
+	import CheckListPlugin from './plugins/CheckListPlugin.svelte';
 	import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 	import { ListItemNode, ListNode } from '@lexical/list';
 	import { LinkNode, AutoLinkNode } from '@lexical/link';
@@ -27,10 +28,10 @@
 	const dispatch = createEventDispatcher();
 
 	let htmlString: string | undefined = undefined;
-	export let editable: boolean | undefined = false;
+	export let editable: boolean | undefined = undefined;
 	let ref: HTMLElement;
 
-	let config = {
+	let config: EditorConfig = {
 		editable,
 		theme,
 		namespace: 'RomeoRichText',
@@ -71,13 +72,13 @@
 		<ImagePlugin />
 		<LinkPlugin {validateUrl} />
 		<OnChangePlugin {onChange} />
+		<CheckListPlugin />
 		<HtmlPlugin
 			{htmlString}
 			on:html={(e) => {
 				htmlString = e.detail.html;
 			}}
 		/>
-
 		<FloatingLinkPlugin anchorElement={ref} />
 	</Editor>
 </div>

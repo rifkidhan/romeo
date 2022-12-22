@@ -1,5 +1,7 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import type { EditorState, LexicalEditor } from 'lexical';
+	import { mergeRegister } from '@lexical/utils';
 	import { onMount, getContext } from 'svelte';
 	export let ignoreHistoryMergeTagChange = true;
 	export let ignoreSelectionChange = false;

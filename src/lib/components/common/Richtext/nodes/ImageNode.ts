@@ -146,7 +146,7 @@ export class ImageNode extends DecoratorNode<HTMLElement> {
 	}
 
 	createDOM(config: EditorConfig, editor: LexicalEditor): HTMLElement {
-		const span = document.createElement('span');
+		const span = document.createElement('div');
 		const theme = config.theme;
 		const className = theme.image;
 
@@ -184,7 +184,7 @@ export class ImageNode extends DecoratorNode<HTMLElement> {
 	}
 
 	decorate(): HTMLElement {
-		const img = document.createElement('div');
+		const img = document.createElement('img');
 
 		return img;
 	}

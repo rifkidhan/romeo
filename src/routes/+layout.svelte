@@ -11,9 +11,7 @@
 <Themes />
 <Header />
 <UiContext>
-	<main class="fit">
-		<slot />
-	</main>
+	<slot />
 </UiContext>
 <BackToTop />
 <Footer />

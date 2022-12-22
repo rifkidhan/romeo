@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { invalidateAll } from '$app/navigation';
 	import { onMount, onDestroy } from 'svelte';
 	import {
 		disableBodyScroll,
@@ -11,11 +12,14 @@
 	import { displayNavbar } from '$lib/stores/ui';
 	import type { TransitionConfig } from 'svelte/transition';
 	import { cubicInOut } from 'svelte/easing';
+	import { getUser, signOut } from '@lucia-auth/sveltekit/client';
 
 	$: pathname = $page.url.pathname;
 
 	let navbar: HTMLElement;
 	let insideNav: HTMLElement;
+
+	const user = getUser();
 
 	const menuItem = [
 		{
@@ -109,6 +113,37 @@
 					{item.name}
 				</a>
 			{/each}
+		</div>
+		<div
+			class="w-full relative mx-auto max-w-2xl inline-flex flex-col md:flex-row container gap-3 items-center justify-center"
+		>
+			{#if $user}
+				<Button
+					variant="secondary"
+					class="w-full !border-primary hover:!shadow-secondary-1"
+					href="/@{$user.username}"
+					on:click={closeNavbar}>Profile</Button
+				>
+				<Button
+					type="button"
+					variant="color"
+					class="bg-red w-full !border-primary hover:!shadow-secondary-1"
+					on:click={async () => {
+						closeNavbar();
+						await signOut();
+						invalidateAll();
+					}}
+				>
+					Sign Out
+				</Button>
+			{:else}
+				<Button
+					variant="secondary"
+					href="/signin"
+					class="w-full !border-primary hover:!shadow-secondary-1"
+					on:click={closeNavbar}>Sign In</Button
+				>
+			{/if}
 		</div>
 		<div class="bottom">
 			<div class="items">© 2022, Rifkidhan</div>

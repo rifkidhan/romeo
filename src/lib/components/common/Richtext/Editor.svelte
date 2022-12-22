@@ -1,14 +1,14 @@
 <script lang="ts">
-	import type { LexicalEditor } from 'lexical';
 	import { onMount, setContext } from 'svelte';
 	import { createEditor } from 'lexical';
+	import type { EditorConfig } from '$lib/types/lexical';
 
-	export let config = {};
+	export let config: EditorConfig | undefined = undefined;
 	export let floatingRef: HTMLDivElement | HTMLElement | undefined = undefined;
 
 	let contentEditable: HTMLDivElement;
 
-	const editor: LexicalEditor = createEditor(config);
+	const editor = createEditor(config);
 	setContext('editor', editor);
 
 	onMount(() => {
