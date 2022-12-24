@@ -35,7 +35,7 @@
 	/**
 	 * Value for binding input.
 	 */
-	export let value: string | number | any = '';
+	export let value: string | number | any = ''; // eslint-disable-line @typescript-eslint/no-explicit-any
 
 	let rootCN = cn('wrapper', [iconPosition], { ['disabledwrapper']: disabled }, $$props.class);
 	let inputCN = cn('input', { ['disabled']: disabled });

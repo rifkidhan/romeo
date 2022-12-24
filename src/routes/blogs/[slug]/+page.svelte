@@ -1,9 +1,13 @@
 <script lang="ts">
+	import { page } from '$app/stores';
 	import { Image } from '$lib/components/ui';
 	import type { PageData } from './$types';
 	export let data: PageData;
 
+	$: pathname = $page.url.pathname;
+
 	$: blog = data.blog;
+	$: console.log(pathname);
 </script>
 
 <div class="root">
@@ -15,17 +19,20 @@
 		/>
 	</div>
 
-	<h1>
-		{blog.title}
-	</h1>
-	<article class="container mx-auto">
-		{@html blog.content}
-	</article>
+	<div class="container mx-auto flex flex-col items-center">
+		<h1>
+			{blog.title}
+		</h1>
+		<a href="{pathname}/edit">edit</a>
+		<article class="prose max-w-none">
+			{@html blog.content}
+		</article>
+	</div>
 </div>
 
 <style lang="postcss">
 	.root {
-		@apply flex flex-col gap-10;
+		@apply flex flex-col items-center gap-10;
 	}
 	.image {
 		@apply relative h-screen w-full overflow-hidden;

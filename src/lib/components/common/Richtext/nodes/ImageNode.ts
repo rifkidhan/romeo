@@ -91,7 +91,7 @@ export class ImageNode extends DecoratorNode<HTMLElement> {
 
 	static importDOM(): DOMConversionMap | null {
 		return {
-			img: (node: Node) => ({
+			img: () => ({
 				conversion: convertImageElement,
 				priority: 0
 			})
@@ -181,6 +181,10 @@ export class ImageNode extends DecoratorNode<HTMLElement> {
 
 	getAltText(): string {
 		return this.__altText;
+	}
+
+	getTitleText(): string | undefined {
+		return this.__title;
 	}
 
 	decorate(): HTMLElement {

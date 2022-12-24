@@ -1,5 +1,5 @@
 import type { RequestHandler } from './$types';
-import { deta, galleries } from '$lib/server/deta';
+import { galleries } from '$lib/server/deta';
 import { error } from '@sveltejs/kit';
 
 export const GET: RequestHandler = async ({ url }) => {

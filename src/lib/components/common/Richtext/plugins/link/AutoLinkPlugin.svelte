@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
 	import type { ChangeHandler, LinkMatcher, LinkMatcherResult } from '$lib/types/lexical';
 	import type { ElementNode, LexicalEditor, LexicalNode } from 'lexical';
 	import { getContext, onMount } from 'svelte';

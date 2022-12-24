@@ -7,7 +7,7 @@ export const load = (async ({ locals }) => {
 	const session = await locals.validate();
 
 	if (!session) {
-		throw redirect(302, '/');
+		throw redirect(307, '/');
 	}
 
 	return {};
@@ -19,7 +19,7 @@ export const actions: Actions = {
 		const title = form.get('title') as string;
 		const description = form.get('description') as string;
 		const published = form.get('published');
-		const slug = form.get('slug') as string;
+		const slug = form.get('slug');
 		const thumbnail = form.get('thumbnail') as File;
 		const content = form.get('content') as string;
 		const metatitle = form.get('metatitle');
@@ -43,17 +43,22 @@ export const actions: Actions = {
 		const imageUpload = deta.Drive('blogs');
 
 		try {
-			await imageUpload.put(thumbnailName, {
+			const imageUploader = await imageUpload.put(thumbnailName, {
 				data: Buffer.from(file),
 				contentType
 			});
-			await galleries.put({
+			const imagesDb = await galleries.put({
 				bucket: 'blogs',
 				name: thumbnailName,
 				content_type: contentType,
 				uploaded_at: createdAt
 			});
-			const postBlogs = await blogs.put({
+
+			if (!imageUploader || !imagesDb) {
+				return fail(400, { imageUpload: false });
+			}
+
+			await blogs.put({
 				title,
 				description,
 				content,
@@ -67,11 +72,9 @@ export const actions: Actions = {
 				updated_at: updatedAt
 			});
 
-			if (postBlogs) {
-				throw redirect(302, '/blogs');
-			}
+			throw redirect(302, '/blogs');
 		} catch {
-			throw fail(400);
+			return fail(400);
 		}
 	}
 };

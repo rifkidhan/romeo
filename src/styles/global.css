@@ -125,16 +125,16 @@
 		@apply relative m-0 min-h-full text-sm md:text-base;
 	}
 	h1 {
-		@apply font-sans text-6xl leading-[.9] tracking-[-0.01rem] md:text-8xl;
+		@apply font-sans text-5xl leading-[.9] tracking-[-0.01rem] md:text-6xl;
 	}
 	h2 {
-		@apply font-sans text-4xl tracking-[-0.01rem] md:text-6xl;
+		@apply font-sans text-3xl tracking-[-0.01rem] md:text-4xl;
 	}
 	h3 {
-		@apply font-sans text-2xl tracking-[-0.01rem] md:text-4xl;
+		@apply font-sans text-2xl tracking-[-0.01rem] md:text-3xl;
 	}
 	h4 {
-		@apply font-sans text-xl tracking-[-0.01rem] md:text-3xl;
+		@apply font-sans text-xl tracking-[-0.01rem] md:text-2xl;
 	}
 	h5 {
 		@apply font-sans text-lg leading-4 md:text-xl;

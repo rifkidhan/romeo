@@ -169,7 +169,7 @@
 {#if $floatingLink}
 	<div
 		bind:this={editorRef}
-		class="bg-black fixed border-2 rounded-lg"
+		class="fixed rounded-lg border-2 border-secondary bg-primary"
 		use:popperContent
 		transition:fade={{ easing: circInOut, duration: 200 }}
 	>
@@ -212,7 +212,7 @@
 					href={linkUrl}
 					target="_blank"
 					rel="noopener noreferrer"
-					class="whitespace-nowrap text-secondary w-4/5 overflow-hidden text-ellipsis"
+					class="w-4/5 overflow-hidden text-ellipsis whitespace-nowrap text-primary"
 				>
 					{linkUrl}
 				</a>

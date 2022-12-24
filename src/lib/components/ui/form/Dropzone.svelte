@@ -8,6 +8,7 @@
 	export let files: FileList | undefined = undefined;
 	export let loading: boolean | undefined = undefined;
 	export let disabled: boolean | undefined = undefined;
+	export let preview: boolean | undefined = undefined;
 
 	let input: HTMLInputElement;
 
@@ -22,11 +23,11 @@
 		'dropzone',
 		{ ['disabled']: disabled, ['skeleton loading']: loading },
 		$$props.class,
-		$$slots.preview && files ? 'preview' : 'h-64'
+		$$slots.preview && (files || preview) ? 'preview' : 'h-64'
 	);
 </script>
 
-<label
+<div
 	class={className}
 	tabIndex="0"
 	on:keydown={keydown}
@@ -40,7 +41,7 @@
 	on:dragover
 	on:drop
 >
-	{#if $$slots.preview && files}
+	{#if $$slots.preview && (files || preview)}
 		<slot name="preview" />
 	{:else}
 		<slot name="icon">
@@ -64,7 +65,7 @@
 		on:change
 		on:click
 	/>
-</label>
+</div>
 
 <style lang="postcss">
 	.dropzone {

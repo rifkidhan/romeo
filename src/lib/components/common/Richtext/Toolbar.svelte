@@ -49,6 +49,7 @@
 	import { sanitizeUrl } from './utils/url';
 	import { floatingLink } from './utils/storeAction';
 	import { activeModal } from '$lib/stores/ui';
+	import 'prism-svelte';
 
 	const editor = getContext<LexicalEditor>('editor');
 
@@ -58,7 +59,7 @@
 		for (const [lang, friendlyName] of Object.entries(CODE_LANGUAGE_FRIENDLY_NAME_MAP)) {
 			options.push([lang, friendlyName]);
 		}
-
+		options.push(['svelte', 'Svelte']);
 		return options;
 	};
 
@@ -70,6 +71,8 @@
 	let isUnderline = false;
 	let isCode = false;
 	let isLink = false;
+	let isSubScript = false;
+	let isSuperScript = false;
 	let codeLanguage = '';
 	let selectedElementKey: null | NodeKey = null;
 	let blockType = 'paragraph';
@@ -102,6 +105,8 @@
 			isStrikeThrough = selection.hasFormat('strikethrough');
 			isUnderline = selection.hasFormat('underline');
 			isCode = selection.hasFormat('code');
+			isSubScript = selection.hasFormat('subscript');
+			isSuperScript = selection.hasFormat('superscript');
 
 			const node = getSelectedNode(selection);
 			const parent = node.getParent();
@@ -304,6 +309,18 @@
 			name: 'Strikethrough Format',
 			command: () => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'strikethrough'),
 			active: isStrikeThrough
+		},
+		{
+			id: 'subscript',
+			name: 'Subscript Format',
+			command: () => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'subscript'),
+			active: isSubScript
+		},
+		{
+			id: 'superscript',
+			name: 'Superscript Format',
+			command: () => editor.dispatchCommand(FORMAT_TEXT_COMMAND, 'superscript'),
+			active: isSuperScript
 		},
 		{
 			id: 'link',

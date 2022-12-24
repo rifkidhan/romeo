@@ -46,6 +46,7 @@
 
 		const parentNode = target.parentNode;
 
+		/* eslint-disabled-next-line @typescript-eslint/ban-ts-comment */
 		// @ts-ignore internal field
 		if (!parentNode || parentNode.__lexicalListType !== 'check') {
 			return;
@@ -63,12 +64,14 @@
 		}
 	};
 
-	const findEditor = (target: Node) => {
-		let node: ParentNode | Node | null = target;
+	const findEditor = (target: Node | ParentNode | null) => {
+		let node = target;
 
 		while (node) {
+			/* eslint-disabled-next-line @typescript-eslint/ban-ts-comment */
 			// @ts-ignore internal field
 			if (node.__lexicalEditor) {
+				/* eslint-disabled-next-line @typescript-eslint/ban-ts-comment */
 				// @ts-ignore internal field
 				return node.__lexicalEditor;
 			}
@@ -111,6 +114,7 @@
 		return activeElement != null &&
 			activeElement.tagName === 'LI' &&
 			activeElement.parentNode != null &&
+			/* eslint-disabled-next-line @typescript-eslint/ban-ts-comment */
 			// @ts-ignore internal field
 			activeElement.parentNode.__lexicalListType === 'check'
 			? activeElement
@@ -215,7 +219,7 @@
 			),
 			editor.registerCommand(
 				KEY_ESCAPE_COMMAND,
-				(event) => {
+				() => {
 					const activeItem = getActiveCheckListItem();
 
 					if (activeItem != null) {

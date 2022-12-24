@@ -1,7 +1,6 @@
 import { fail } from '@sveltejs/kit';
 import { auth } from '$lib/server/lucia';
 import type { Actions } from './$types';
-import { randomUUID as v4 } from 'crypto';
 
 export const actions: Actions = {
 	default: async ({ request, locals }) => {

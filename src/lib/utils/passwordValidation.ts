@@ -1,3 +1,4 @@
+/* eslint-disable-next-line @typescript-eslint/no-explicit-any */
 const passwordValidation = (password: string | any) => {
 	let progress = 0;
 
@@ -41,7 +42,7 @@ const passwordValidation = (password: string | any) => {
 		}
 	};
 
-	let progressColor = swithColor(progress);
+	const progressColor = swithColor(progress);
 
 	return {
 		progress,

@@ -77,7 +77,9 @@
 						},
 						COMMAND_PRIORITY_LOW
 				  )
-				: () => {}
+				: () => {
+						// empty
+				  }
 		);
 	});
 </script>

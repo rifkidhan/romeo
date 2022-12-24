@@ -1,6 +1,6 @@
 <script lang="ts">
 	import type { PageData } from './$types';
-	import { Card, Button, Input } from '$lib/components/ui';
+	import { Card, Button } from '$lib/components/ui';
 	import { getUser } from '@lucia-auth/sveltekit/client';
 
 	const user = getUser();
@@ -9,7 +9,7 @@
 	$: blogs = data.blogs;
 </script>
 
-<main class="fit flex flex-col gap-10 items-center justify-center my-10">
+<main class="fit my-10 flex flex-col items-center justify-center gap-10">
 	<h1>Blogs Page</h1>
 	<div class="container mx-auto">
 		<div class="flex items-center">
@@ -18,7 +18,7 @@
 			{/if}
 		</div>
 		{#if blogs.length != 0}
-			<div class="grid md:grid-cols-2 grid-cols-1 lg:grid-cols-3 gap-5 ">
+			<div class="grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-3 ">
 				{#each blogs as blog}
 					<Card
 						href="/blogs/{blog.slug}"
@@ -31,7 +31,7 @@
 				{/each}
 			</div>
 		{:else}
-			<div class="flex items-center flex-col justify-center">
+			<div class="flex flex-col items-center justify-center">
 				<img src="/not-found.svg" alt="No one post" />
 				<h2 class="text-center">No one blog has been posted</h2>
 			</div>

@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { Logo, Button, Loading, Dropdown, DropdownItem } from '$lib/components/ui';
+	import { Logo, Loading, Dropdown, DropdownItem } from '$lib/components/ui';
 
 	const tests = [
 		{ name: 'Rifkidhan', value: 'rifkidhan' },
@@ -10,7 +10,7 @@
 	let title = 'Contoh pertama';
 </script>
 
-<main class="flex flex-col gap-10 ">
+<main class="fit flex flex-col gap-10">
 	<Logo variant="mark" class="w-36" />
 	<Loading type="dots" />
 

@@ -130,5 +130,11 @@
 		<path d="M18 18v-6a3 3 0 0 0 -3 -3h-10l4 -4m0 8l-4 -4" />
 	{:else if name === 'redo'}
 		<path d="M6 18v-6a3 3 0 0 1 3 -3h10l-4 -4m0 8l4 -4" />
+	{:else if name === 'subscript'}
+		<path d="M5 7l8 10m-8 0l8 -10" />
+		<path d="M21 20h-4l3.5 -4a1.73 1.73 0 0 0 -3.5 -2" />
+	{:else if name === 'superscript'}
+		<path d="M5 7l8 10m-8 0l8 -10" />
+		<path d="M21 11h-4l3.5 -4a1.73 1.73 0 0 0 -3.5 -2" />
 	{/if}
 </svg>

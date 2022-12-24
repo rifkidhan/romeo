@@ -1,15 +1,16 @@
 <script lang="ts">
-	import { browser } from '$app/environment';
 	import type { EditorState, LexicalEditor } from 'lexical';
-	import { mergeRegister } from '@lexical/utils';
 	import { onMount, getContext } from 'svelte';
 	export let ignoreHistoryMergeTagChange = true;
 	export let ignoreSelectionChange = false;
 	export let onChange: (editorState: EditorState, editor: LexicalEditor) => void;
-
+	export let editorState: Readonly<string> | undefined = undefined;
 	const editor = getContext<LexicalEditor>('editor');
 
 	onMount(() => {
+		if (editorState) {
+			editor.setEditorState(editor.parseEditorState(editorState));
+		}
 		editor.registerUpdateListener(
 			({ editorState, dirtyElements, dirtyLeaves, prevEditorState, tags }) => {
 				if (

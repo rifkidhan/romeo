@@ -115,7 +115,7 @@
 			{/each}
 		</div>
 		<div
-			class="w-full relative mx-auto max-w-2xl inline-flex flex-col md:flex-row container gap-3 items-center justify-center"
+			class="container relative mx-auto inline-flex w-full max-w-2xl flex-col items-center justify-center gap-3 md:flex-row"
 		>
 			{#if $user}
 				<Button
@@ -127,7 +127,7 @@
 				<Button
 					type="button"
 					variant="color"
-					class="bg-red w-full !border-primary hover:!shadow-secondary-1"
+					class="w-full !border-primary bg-red hover:!shadow-secondary-1"
 					on:click={async () => {
 						closeNavbar();
 						await signOut();

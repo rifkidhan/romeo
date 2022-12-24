@@ -12,7 +12,7 @@
 
 <div class="flex flex-col items-center justify-center gap-5">
 	<h1>Sign In</h1>
-	<form method="post" use:enhance class="flex flex-col gap-5 w-full">
+	<form method="post" use:enhance class="flex w-full flex-col gap-5">
 		<Field htmlFor="username" label="Username">
 			<Input name="username" bind:value={username} />
 		</Field>

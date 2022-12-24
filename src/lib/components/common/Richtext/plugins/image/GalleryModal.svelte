@@ -32,9 +32,11 @@
 	const fileImageUpload = async () => {
 		loading = true;
 		const data = new FormData();
-		data.append('image', file!);
+		if (file) {
+			data.append('image', file);
+		}
 
-		const res = await fetch('/api/images/blogs', {
+		const res = await fetch('/api/images/content', {
 			method: 'POST',
 			body: data
 		});
@@ -42,7 +44,7 @@
 		if (!res) {
 			throw new Error('error');
 		}
-		src = `/api/images/blogs?file=${file?.name}`;
+		src = `/api/images/content?file=${file?.name}`;
 		loading = false;
 		dispatch('payload', {
 			src: src,
@@ -106,14 +108,14 @@
 					<div
 						class="imageWrapper"
 						on:click={() => {
-							src = `/api/images/blogs?file=${images.name}`;
+							src = `/api/images/${images.bucket}?file=${images.name}`;
 							mode = 'image';
 						}}
 						on:keydown
 					>
 						<img
 							loading="lazy"
-							src="/api/images/blogs?file={images.name}"
+							src="/api/images/{images.bucket}?file={images.name}"
 							alt={images.name}
 							class="imageItems"
 						/>

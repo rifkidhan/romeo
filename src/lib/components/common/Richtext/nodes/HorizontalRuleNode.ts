@@ -5,8 +5,7 @@ import type {
 	DOMConversionMap,
 	DOMConversionOutput,
 	DOMExportOutput,
-	LexicalEditor,
-	EditorConfig
+	LexicalEditor
 } from 'lexical';
 import { createCommand, DecoratorNode, $applyNodeReplacement } from 'lexical';
 import HorizontalRuleComponent from './HorizontalRuleComponent.svelte';
@@ -37,13 +36,13 @@ export class HorizontalRuleNode extends DecoratorNode<HTMLElement> {
 		return new HorizontalRuleNode(node.__key);
 	}
 
-	static importJSON(_serializedNode: SerializedHorizontalRuleNode): HorizontalRuleNode {
+	static importJSON(): HorizontalRuleNode {
 		return $createHorizontalRuleNode();
 	}
 
 	static importDOM(): DOMConversionMap | null {
 		return {
-			hr: (node: Node) => ({
+			hr: () => ({
 				conversion: convertHorizontalRuleElement,
 				priority: 0
 			})

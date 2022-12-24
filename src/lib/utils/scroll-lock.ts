@@ -22,12 +22,12 @@ interface Lock {
 //   window.removeEventListener('testPassive', noop, passiveTestOptions)
 // }
 
-const isIosDevice =
-	typeof window !== 'undefined' &&
-	window.navigator &&
-	window.navigator.platform &&
-	(/iP(ad|hone|od)/.test(window.navigator.platform) ||
-		(window.navigator.platform === 'MacIntel' && window.navigator.maxTouchPoints > 1));
+// const isIosDevice =
+// 	typeof window !== 'undefined' &&
+// 	window.navigator &&
+// 	window.navigator.platform &&
+// 	(/iP(ad|hone|od)/.test(window.navigator.platform) ||
+// 		(window.navigator.platform === 'MacIntel' && window.navigator.maxTouchPoints > 1));
 type HandleScrollEvent = TouchEvent;
 
 let locks: Array<Lock> = [];
@@ -209,64 +209,66 @@ export const disableBodyScroll = (targetElement: any, options?: BodyScrollOption
 
 	locks = [...locks, lock];
 
-	if (isIosDevice) {
-		setPositionFixed();
-	} else {
-		setOverflowHidden(options);
-	}
+	// if (isIosDevice) {
+	// 	setPositionFixed();
+	// } else {
+	// 	setOverflowHidden(options);
+	// }
+	setOverflowHidden(options);
 
-	if (isIosDevice) {
-		targetElement.ontouchstart = (event: HandleScrollEvent) => {
-			if (event.targetTouches.length === 1) {
-				// detect single touch.
-				initialClientY = event.targetTouches[0].clientY;
-			}
-		};
-		targetElement.ontouchmove = (event: HandleScrollEvent) => {
-			if (event.targetTouches.length === 1) {
-				// detect single touch.
-				handleScroll(event, targetElement);
-			}
-		};
+	// if (isIosDevice) {
+	// 	targetElement.ontouchstart = (event: HandleScrollEvent) => {
+	// 		if (event.targetTouches.length === 1) {
+	// 			// detect single touch.
+	// 			initialClientY = event.targetTouches[0].clientY;
+	// 		}
+	// 	};
+	// 	targetElement.ontouchmove = (event: HandleScrollEvent) => {
+	// 		if (event.targetTouches.length === 1) {
+	// 			// detect single touch.
+	// 			handleScroll(event, targetElement);
+	// 		}
+	// 	};
 
-		if (!documentListenerAdded) {
-			// document.addEventListener(
-			// 	'touchmove',
-			// 	preventDefault,
-			// 	hasPassiveEvents ? { passive: false } : undefined
-			// );
-			documentListenerAdded = true;
-		}
-	}
+	// 	if (!documentListenerAdded) {
+	// 		// document.addEventListener(
+	// 		// 	'touchmove',
+	// 		// 	preventDefault,
+	// 		// 	hasPassiveEvents ? { passive: false } : undefined
+	// 		// );
+	// 		documentListenerAdded = true;
+	// 	}
+	// }
 };
 
 export const clearAllBodyScrollLocks = (): void => {
-	if (isIosDevice) {
-		// Clear all locks ontouchstart/ontouchmove handlers, and the references.
-		locks.forEach((lock: Lock) => {
-			lock.targetElement.ontouchstart = null;
-			lock.targetElement.ontouchmove = null;
-		});
+	// if (isIosDevice) {
+	// 	// Clear all locks ontouchstart/ontouchmove handlers, and the references.
+	// 	locks.forEach((lock: Lock) => {
+	// 		lock.targetElement.ontouchstart = null;
+	// 		lock.targetElement.ontouchmove = null;
+	// 	});
 
-		if (documentListenerAdded) {
-			// document.removeEventListener(
-			// 	'touchmove',
-			// 	preventDefault,
-			// 	hasPassiveEvents ? { passive: false } : undefined
-			// );
-			document.removeEventListener('touchmove', preventDefault);
-			documentListenerAdded = false;
-		}
+	// 	if (documentListenerAdded) {
+	// 		// document.removeEventListener(
+	// 		// 	'touchmove',
+	// 		// 	preventDefault,
+	// 		// 	hasPassiveEvents ? { passive: false } : undefined
+	// 		// );
+	// 		document.removeEventListener('touchmove', preventDefault);
+	// 		documentListenerAdded = false;
+	// 	}
 
-		// Reset initial clientY.
-		initialClientY = -1;
-	}
+	// 	// Reset initial clientY.
+	// 	initialClientY = -1;
+	// }
 
-	if (isIosDevice) {
-		restorePositionSetting();
-	} else {
-		restoreOverflowSetting();
-	}
+	// if (isIosDevice) {
+	// 	restorePositionSetting();
+	// } else {
+	// 	restoreOverflowSetting();
+	// }
+	restoreOverflowSetting();
 
 	locks = [];
 };
@@ -283,24 +285,25 @@ export const enableBodyScroll = (targetElement: any): void => {
 
 	locks = locks.filter((lock) => lock.targetElement !== targetElement);
 
-	if (isIosDevice) {
-		targetElement.ontouchstart = null;
-		targetElement.ontouchmove = null;
+	// if (isIosDevice) {
+	// 	targetElement.ontouchstart = null;
+	// 	targetElement.ontouchmove = null;
 
-		if (documentListenerAdded && locks.length === 0) {
-			// document.removeEventListener(
-			// 	'touchmove',
-			// 	preventDefault,
-			// 	hasPassiveEvents ? { passive: false } : undefined
-			// );
-			document.removeEventListener('touchmove', preventDefault);
-			documentListenerAdded = false;
-		}
-	}
+	// 	if (documentListenerAdded && locks.length === 0) {
+	// 		// document.removeEventListener(
+	// 		// 	'touchmove',
+	// 		// 	preventDefault,
+	// 		// 	hasPassiveEvents ? { passive: false } : undefined
+	// 		// );
+	// 		document.removeEventListener('touchmove', preventDefault);
+	// 		documentListenerAdded = false;
+	// 	}
+	// }
 
-	if (isIosDevice) {
-		restorePositionSetting();
-	} else {
-		restoreOverflowSetting();
-	}
+	// if (isIosDevice) {
+	// 	restorePositionSetting();
+	// } else {
+	// 	restoreOverflowSetting();
+	// }
+	restoreOverflowSetting();
 };

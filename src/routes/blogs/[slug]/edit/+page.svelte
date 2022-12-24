@@ -1,33 +1,39 @@
 <script lang="ts">
+	import type { PageData } from './$types';
 	import { enhance } from '$app/forms';
 	import { Button, Input, Field, TextArea, Toggle, Dropzone } from '$lib/components/ui';
 	import { Richtext } from '$lib/components/common';
 	import { getUser } from '@lucia-auth/sveltekit/client';
 	import slugify from '$lib/utils/slugify';
 
+	export let data: PageData;
+
+	$: blog = data.blog;
+
 	const user = getUser();
 
-	let files: FileList;
-	let checked = false;
+	let files: FileList | undefined = undefined;
 
-	$: file = files ? URL.createObjectURL(files[0]) : null;
-
+	$: file = files ? URL.createObjectURL(files[0]) : `/api/images/blogs?file=${blog.thumbnail}`;
+	let published: boolean;
 	$: authorId = $user?.userId;
+	$: content = blog.content ?? '';
+	$: title = blog.title ?? '';
+	$: description = blog.description ?? '';
+	$: updatedAt = new Date().toISOString();
+	$: slug = blog.slug ?? slugify(title) ?? '';
+	$: metaTitle = blog.meta_title ?? title ?? '';
+	$: metaDescription = blog.meta_description ?? description ?? '';
 
-	let content: string;
-	let title = '';
-	let description = '';
-	let createAt = new Date().toISOString();
-	$: slug = slugify(title) ?? '';
-	$: metaTitle = title ?? '';
-	$: metaDescription = description ?? '';
+	$: console.log(published);
 </script>
 
 <div class="container mx-auto my-10 flex flex-col">
 	<form method="POST" use:enhance class="flex flex-col gap-5">
 		<input type="hidden" value={authorId} id="authorId" name="authorId" />
-		<input type="hidden" value={createAt} id="created_at" name="created_at" />
-		<input type="hidden" value={createAt} id="updated_at" name="updated_at" />
+		<input type="hidden" value={updatedAt} id="updated_at" name="updated_at" />
+		<input type="hidden" value={blog.key} id="key" name="key" />
+		<input type="hidden" value={blog.thumbnail} id="thumbnail-name" name="thumbnail-name" />
 		<Field label="Title" htmlFor="title">
 			<Input type="text" name="title" required bind:value={title} />
 		</Field>
@@ -39,16 +45,21 @@
 				<Input type="text" name="slug" bind:value={slug} />
 			</Field>
 			<Field label="Published" htmlFor="published">
-				<Toggle name="published" bind:checked value={!checked ? 'false' : 'true'} />
+				<Toggle
+					name="published"
+					bind:checked={published}
+					value={`${blog.published ?? published}`}
+				/>
 			</Field>
 		</span>
 
 		<Field label="Thumbnail" htmlFor="thumbnail">
-			<Dropzone name="thumbnail" bind:files>
+			<Dropzone name="thumbnail" bind:files preview={true}>
 				<img
-					src={file}
+					loading="lazy"
 					slot="preview"
-					alt="preview upload"
+					src={file}
+					alt={blog.title}
 					height="500"
 					width="500"
 					class="h-auto w-auto"
@@ -56,9 +67,11 @@
 				/>
 			</Dropzone>
 		</Field>
+
 		<Field label="Content" htmlFor="content">
 			<input type="hidden" id="content" name="content" value={content} required />
 			<Richtext
+				editorState={blog.content}
 				on:json={(e) => {
 					content = e.detail.content;
 				}}

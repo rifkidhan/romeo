@@ -1,6 +1,5 @@
 import type { RequestHandler } from './$types';
 import { deta, galleries } from '$lib/server/deta';
-import type { Galleries } from '$lib/types/objects';
 import { error } from '@sveltejs/kit';
 import sharp from 'sharp';
 
@@ -10,30 +9,7 @@ export const GET: RequestHandler = async ({ params, url }) => {
 	const quality = url.searchParams.get('quality');
 	const width = url.searchParams.get('w');
 	const height = url.searchParams.get('h');
-	const list = url.searchParams.get('list');
-	const limit = url.searchParams.get('limit');
 	const drive = deta.Drive(drivename);
-
-	if (list) {
-		const listGalleries = await galleries.fetch(
-			{},
-			{
-				limit: limit ? parseInt(limit) : 100
-			}
-		);
-
-		const resList = listGalleries.items;
-		if (!resList) {
-			throw error(400);
-		}
-
-		return new Response(JSON.stringify(resList), {
-			status: 200,
-			headers: {
-				'Content-Type': 'application/json'
-			}
-		});
-	}
 
 	const files = await drive.get(filename);
 	if (!files) {

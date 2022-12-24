@@ -1,4 +1,4 @@
-import type { LexicalEditor, EditorThemeClasses, Klass, LexicalNode } from 'lexical';
+import type { LexicalEditor, EditorThemeClasses, Klass, LexicalNode, EditorState } from 'lexical';
 import type { LinkAttributes } from '@lexical/link';
 
 export type ChangeHandler = (url: string | null, prevUrl: string | null) => void;
@@ -15,7 +15,7 @@ export type LinkMatcher = (text: string) => LinkMatcherResult | null;
 
 export type ValidateUrl = (url: string) => boolean;
 
-export type EditorConfig = {
+export type EditorConfig = Readonly<{
 	namespace: string;
 	nodes?: ReadonlyArray<
 		| Klass<LexicalNode>
@@ -29,4 +29,5 @@ export type EditorConfig = {
 	parentEditor?: LexicalEditor | undefined;
 	editable?: boolean | undefined;
 	theme?: EditorThemeClasses | undefined;
-};
+	editorState?: EditorState;
+}>;

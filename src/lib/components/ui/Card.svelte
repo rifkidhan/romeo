@@ -1,7 +1,6 @@
 <script lang="ts">
 	import cn from 'clsx';
 	import { Image } from '$lib/components/ui';
-	import { fade } from 'svelte/transition';
 
 	export let href: string | undefined = undefined;
 	export let horizontal = false;

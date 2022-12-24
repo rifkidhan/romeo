@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { onMount, beforeUpdate } from 'svelte';
 	import type { LayoutData } from './$types';
 	import { page } from '$app/stores';
 	import { Segment } from '$lib/components/common';
@@ -36,13 +35,13 @@
 </script>
 
 <div class="main">
-	<div class="flex container mx-auto flex-row items-center gap-5">
-		<div class="rounded-full border-2 border-secondary overflow-hidden w-36 h-36">
+	<div class="container mx-auto flex flex-row items-center gap-5">
+		<div class="h-36 w-36 overflow-hidden rounded-full border-2 border-secondary">
 			<img
 				loading="lazy"
 				src={profileData.photo_url ?? '/avatar-1.png'}
 				alt="{profileData.username} Profile"
-				class="w-full max-h-full"
+				class="max-h-full w-full"
 			/>
 		</div>
 		<div>
@@ -56,7 +55,7 @@
 	</div>
 	<Segment list={segmentList} />
 	<div
-		class="border-4 container mx-auto shadow-down-3 border-secondary w-full rounded-2xl min-h-screen"
+		class="container mx-auto min-h-screen w-full rounded-2xl border-4 border-secondary shadow-down-3"
 	>
 		<slot />
 	</div>

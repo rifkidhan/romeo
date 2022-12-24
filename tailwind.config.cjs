@@ -159,18 +159,6 @@ module.exports = {
 						figcaption: {
 							color: 'rgb(var(--accent-4))'
 						},
-						// pre: {
-						//   color: 'rgb(var(--accent-2))',
-						//   backgroundColor: 'rgb(var(--accent-3))',
-						//   overflowX: 'auto',
-						//   fontWeight: '400',
-						//   '& > code': {
-						//     backgroundColor: 'transparent',
-						//     '&::before, ::after': {
-						//       content: 'none'
-						//     }
-						//   }
-						// },
 
 						pre: null,
 						code: null,

@@ -7,7 +7,6 @@
 	import HistoryPlugin from './plugins/HistoryPlugin.svelte';
 	import ListPlugin from './plugins/ListPlugin.svelte';
 	import OnChangePlugin from './plugins/OnChangePlugin.svelte';
-	import HtmlPlugin from './plugins/HtmlPlugin.svelte';
 	import AutoLinkPlugin from './plugins/link/AutoLinkPlugin.svelte';
 	import LinkPlugin from './plugins/link/LinkPlugin.svelte';
 	import CodeHighlightingPlugin from './plugins/CodeHighlightingPlugin.svelte';
@@ -16,6 +15,7 @@
 	import HorizontalRulePlugin from './plugins/HorizontalRulePlugin.svelte';
 	import ImagePlugin from './plugins/image/ImagePlugin.svelte';
 	import CheckListPlugin from './plugins/CheckListPlugin.svelte';
+	import JsonConverter from './plugins/JsonConverter.svelte';
 	import { HeadingNode, QuoteNode } from '@lexical/rich-text';
 	import { ListItemNode, ListNode } from '@lexical/list';
 	import { LinkNode, AutoLinkNode } from '@lexical/link';
@@ -27,9 +27,10 @@
 
 	const dispatch = createEventDispatcher();
 
-	let htmlString: string | undefined = undefined;
 	export let editable: boolean | undefined = undefined;
+	export let editorState: string | undefined = undefined;
 	let ref: HTMLElement;
+	let jsonString: string;
 
 	let config: EditorConfig = {
 		editable,
@@ -54,7 +55,7 @@
 
 	const onChange = () => {
 		dispatch('json', {
-			content: htmlString
+			content: jsonString
 		});
 	};
 </script>
@@ -71,14 +72,9 @@
 		<HorizontalRulePlugin />
 		<ImagePlugin />
 		<LinkPlugin {validateUrl} />
-		<OnChangePlugin {onChange} />
+		<OnChangePlugin {onChange} {editorState} />
 		<CheckListPlugin />
-		<HtmlPlugin
-			{htmlString}
-			on:html={(e) => {
-				htmlString = e.detail.html;
-			}}
-		/>
+		<JsonConverter on:output={(e) => (jsonString = e.detail.json)} />
 		<FloatingLinkPlugin anchorElement={ref} />
 	</Editor>
 </div>

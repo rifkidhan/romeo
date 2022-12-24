@@ -6,3 +6,7 @@ micros:
     src: .
     engine: svelte-kit
     primary: true
+    presets:
+      env:
+        - name: ORIGIN
+          description: Set origin
