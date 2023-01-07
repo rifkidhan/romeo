@@ -4,7 +4,7 @@
 	import {
 		INSERT_IMAGE_COMMAND,
 		$createImageNode as createImageNode,
-		ImageNode
+		ImageNode as NodeImage
 	} from '../../nodes/ImageNode';
 	import { $insertNodes as insertNodes, COMMAND_PRIORITY_EDITOR } from 'lexical';
 	import { mergeRegister } from '@lexical/utils';
@@ -29,7 +29,7 @@
 	};
 
 	onMount(() => {
-		if (!editor.hasNodes([ImageNode])) {
+		if (!editor.hasNodes([NodeImage])) {
 			throw new Error('ImagesPlugin: ImageNode not registered on editor');
 		}
 

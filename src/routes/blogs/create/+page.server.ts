@@ -13,7 +13,7 @@ export const load = (async ({ locals }) => {
 	return {};
 }) satisfies PageServerLoad;
 
-export const actions: Actions = {
+export const actions = {
 	default: async ({ request }) => {
 		const form = await request.formData();
 		const title = form.get('title') as string;
@@ -77,4 +77,4 @@ export const actions: Actions = {
 			return fail(400);
 		}
 	}
-};
+} satisfies Actions;

@@ -10,3 +10,7 @@ micros:
       env:
         - name: ORIGIN
           description: Set origin
+        - name: PROTOCOL_HEADER
+          description: Set Protocol Header
+        - name: HOST_HEADER
+          description: Set host header

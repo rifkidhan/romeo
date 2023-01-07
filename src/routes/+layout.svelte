@@ -8,7 +8,24 @@
 	handleSession(page);
 </script>
 
-<Themes />
+<svelte:head>
+	<link
+		rel="preload"
+		href="fonts/Epilogue.woff2"
+		as="font"
+		type="font/woff2"
+		crossorigin="anonymous"
+	/>
+	<link
+		rel="preload"
+		href="/fonts/Epilogue-Italic.woff2"
+		as="font"
+		type="font/woff2"
+		crossorigin="anonymous"
+	/>
+</svelte:head>
+
+<Themes attribute="class" />
 <Header />
 <UiContext>
 	<slot />

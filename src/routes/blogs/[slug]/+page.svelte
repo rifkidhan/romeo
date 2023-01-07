@@ -2,12 +2,15 @@
 	import { page } from '$app/stores';
 	import { Image } from '$lib/components/ui';
 	import type { PageData } from './$types';
+	import { getUser } from '@lucia-auth/sveltekit/client';
+
 	export let data: PageData;
+
+	const user = getUser();
 
 	$: pathname = $page.url.pathname;
 
 	$: blog = data.blog;
-	$: console.log(pathname);
 </script>
 
 <div class="root">
@@ -23,7 +26,10 @@
 		<h1>
 			{blog.title}
 		</h1>
-		<a href="{pathname}/edit">edit</a>
+		{#if $user}
+			<a href="{pathname}/edit">edit</a>
+		{/if}
+
 		<article class="prose max-w-none">
 			{@html blog.content}
 		</article>

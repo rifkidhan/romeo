@@ -10,8 +10,10 @@ import type {
 	Spread,
 	LexicalCommand
 } from 'lexical';
-import { $applyNodeReplacement, DecoratorNode, createCommand } from 'lexical';
+import pkg from 'lexical';
 import ImageComponent from './ImageComponent.svelte';
+
+const { DecoratorNode, createCommand, $applyNodeReplacement } = pkg;
 
 export interface ImagePayload {
 	src: string;
@@ -187,7 +189,7 @@ export class ImageNode extends DecoratorNode<HTMLElement> {
 		return this.__title;
 	}
 
-	decorate(): HTMLElement {
+	decorate() {
 		const img = document.createElement('img');
 
 		return img;

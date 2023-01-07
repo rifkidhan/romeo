@@ -25,9 +25,6 @@
 			contenteditable="true"
 			bind:this={contentEditable}
 			class="contenteditable"
-			autoComplete="off"
-			autoCorrect="off"
-			autoCapitalize="off"
 			spellCheck="false"
 		/>
 		<slot />

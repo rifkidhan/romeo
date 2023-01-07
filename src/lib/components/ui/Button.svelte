@@ -3,7 +3,7 @@
 	import Icons from './Icons.svelte';
 	import Loading from './Loading.svelte';
 	export let href: string | undefined = undefined;
-	export let active = false;
+	export let active: boolean | undefined = false;
 	export let type: 'submit' | 'button' | 'reset' | undefined = 'button';
 	export let loading = false;
 	export let disabled: boolean | undefined = undefined;

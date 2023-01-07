@@ -1,11 +1,19 @@
-import { createHeadlessEditor } from '@lexical/headless';
-import { $convertToMarkdownString } from '@lexical/markdown';
+import headless from '@lexical/headless';
+import markdown from '@lexical/markdown';
 import { TRANSFORMERS } from './lexicalTransformer';
-import { ImageNode, HorizontalRuleNode } from '$lib/components/common/Richtext';
-import { HeadingNode, QuoteNode } from '@lexical/rich-text';
-import { ListItemNode, ListNode } from '@lexical/list';
-import { LinkNode, AutoLinkNode } from '@lexical/link';
-import { CodeNode, CodeHighlightNode } from '@lexical/code';
+import { ImageNode } from '$lib/components/common/Richtext/nodes/ImageNode';
+import { HorizontalRuleNode } from '$lib/components/common/Richtext/nodes/HorizontalRuleNode';
+import rich from '@lexical/rich-text';
+import list from '@lexical/list';
+import link from '@lexical/link';
+import code from '@lexical/code';
+
+const { createHeadlessEditor } = headless;
+const { $convertToMarkdownString } = markdown;
+const { HeadingNode, QuoteNode } = rich;
+const { LinkNode, AutoLinkNode } = link;
+const { ListItemNode, ListNode } = list;
+const { CodeNode, CodeHighlightNode } = code;
 
 export const lexicalParser = (input: string) => {
 	let output = '';

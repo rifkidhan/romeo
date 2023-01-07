@@ -4,6 +4,8 @@ import { fail, redirect } from '@sveltejs/kit';
 import { blogs, deta, galleries } from '$lib/server/deta';
 import slugify from '$lib/utils/slugify';
 
+export const prerender = false;
+
 export const load = (async ({ params }) => {
 	const slug = params.slug;
 	const getBlog = await blogs.fetch({
@@ -16,7 +18,7 @@ export const load = (async ({ params }) => {
 	};
 }) satisfies PageServerLoad;
 
-export const actions: Actions = {
+export const actions = {
 	default: async ({ request }) => {
 		const form = await request.formData();
 		const key = form.get('key') as string;
@@ -87,4 +89,4 @@ export const actions: Actions = {
 			return fail(400);
 		}
 	}
-};
+} satisfies Actions;

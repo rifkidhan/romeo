@@ -3,8 +3,7 @@ import type { Blog } from '$lib/types/objects';
 import { blogs } from '$lib/server/deta';
 import { parser, LexicalHeadless } from '$lib/utils/markdown';
 
-export const prerender = 'auto';
-export const load: PageServerLoad = async ({ params }) => {
+export const load = (async ({ params }) => {
 	const slug = params.slug;
 	const getBlog = await blogs.fetch({
 		slug
@@ -19,4 +18,4 @@ export const load: PageServerLoad = async ({ params }) => {
 			content: mdToHtml
 		} as Blog
 	};
-};
+}) satisfies PageServerLoad;

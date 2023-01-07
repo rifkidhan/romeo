@@ -5,21 +5,20 @@ import type {
 	Transformer
 } from '@lexical/markdown';
 import type { LexicalNode } from 'lexical';
-import {
-	CHECK_LIST,
-	ELEMENT_TRANSFORMERS,
-	TEXT_FORMAT_TRANSFORMERS,
-	TEXT_MATCH_TRANSFORMERS
-} from '@lexical/markdown';
+import markdown from '@lexical/markdown';
 
+const { CHECK_LIST, ELEMENT_TRANSFORMERS, TEXT_FORMAT_TRANSFORMERS, TEXT_MATCH_TRANSFORMERS } =
+	markdown;
 import {
 	$createImageNode,
 	$isImageNode,
-	ImageNode,
+	ImageNode
+} from '$lib/components/common/Richtext/nodes/ImageNode';
+import {
 	$createHorizontalRuleNode,
 	$isHorizontalRuleNode,
 	HorizontalRuleNode
-} from '$lib/components/common/Richtext';
+} from '$lib/components/common/Richtext/nodes/HorizontalRuleNode';
 
 export const HR: ElementTransformer = {
 	dependencies: [HorizontalRuleNode],

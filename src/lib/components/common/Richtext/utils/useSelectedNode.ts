@@ -1,12 +1,8 @@
 import type { LexicalEditor, NodeKey } from 'lexical';
-import {
-	$createNodeSelection,
-	$getNodeByKey,
-	$getSelection,
-	$isNodeSelection,
-	$setSelection
-} from 'lexical';
+import pkg from 'lexical';
 import { onMount } from 'svelte';
+
+const { $createNodeSelection, $getNodeByKey, $getSelection, $isNodeSelection, $setSelection } = pkg;
 
 const isNodeSelected = (editor: LexicalEditor, key: NodeKey): boolean => {
 	return editor.getEditorState().read(() => {
