@@ -15,7 +15,7 @@
 
 	$: buttonProps = {
 		href,
-		'aria-pressed': component === 'button' && active,
+		'aria-pressed': component === 'button' && active ? active : undefined,
 		'data-variant': variant,
 		disabled,
 		type: component === 'button' ? type : undefined

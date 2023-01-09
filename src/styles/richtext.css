@@ -70,7 +70,7 @@
 .lexical__code:before {
 	@apply absolute left-0 top-0 min-w-[25px] whitespace-pre-wrap border-r-2 border-red bg-accent-2 py-5 px-2 text-right text-accent-5 content-[attr(data-gutter)];
 }
-.lexical__table {
+/* .lexical__table {
 	border-collapse: collapse;
 	border-spacing: 0;
 	max-width: 100%;
@@ -225,7 +225,7 @@
 }
 .lexical__tableCellActionButton:hover {
 	background-color: #ddd;
-}
+} */
 .lexical__characterLimit {
 	display: inline;
 	background-color: #ffbbbb !important;

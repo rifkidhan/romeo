@@ -18,6 +18,7 @@
 
 <img
 	{loading}
+	decoding="async"
 	{src}
 	{alt}
 	{...$$restProps}

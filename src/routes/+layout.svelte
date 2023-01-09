@@ -11,7 +11,7 @@
 <svelte:head>
 	<link
 		rel="preload"
-		href="fonts/Epilogue.woff2"
+		href="/fonts/Epilogue.woff2"
 		as="font"
 		type="font/woff2"
 		crossorigin="anonymous"

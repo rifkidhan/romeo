@@ -28,7 +28,7 @@ export const GET: RequestHandler = async ({ params, url }) => {
 	return new Response(image, {
 		headers: {
 			'Content-Type': `image/webp`,
-			'Cache-Control': 'public, immutable, no-transform, s-maxage=31536000, max-age=31536000'
+			'Cache-Control': 'public, immutable, no-transform, s-maxage=31536000'
 		}
 	});
 };

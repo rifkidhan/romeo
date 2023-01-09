@@ -1,38 +1,24 @@
 import { sveltekit } from '@sveltejs/kit/vite';
+import nodePolyfills from 'rollup-plugin-polyfill-node';
+import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfill';
 
 /** @type {import('vite').UserConfig} */
 const config = {
-	plugins: [sveltekit()]
-	// ssr: {
-	// 	noExternal: [
-	// 		'lexical',
-	// 		'@lexical/clipboard',
-	// 		'@lexical/code',
-	// 		'@lexical/headless',
-	// 		'@lexical/history',
-	// 		'@lexical/link',
-	// 		'@lexical/list',
-	// 		'@lexical/markdown',
-	// 		'@lexical/rich-text',
-	// 		'@lexical/selection',
-	// 		'@lexical/utils'
-	// 	]
-	// },
-	// optimizeDeps: {
-	// 	exclude: [
-	// 		'lexical',
-	// 		'@lexical/clipboard',
-	// 		'@lexical/code',
-	// 		'@lexical/headless',
-	// 		'@lexical/history',
-	// 		'@lexical/link',
-	// 		'@lexical/list',
-	// 		'@lexical/markdown',
-	// 		'@lexical/rich-text',
-	// 		'@lexical/selection',
-	// 		'@lexical/utils'
-	// 	]
-	// }
+	plugins: [sveltekit()],
+
+	optimizeDeps: {
+		esbuildOptions: {
+			define: {
+				global: 'globalThis'
+			},
+			plugins: [NodeModulesPolyfillPlugin()]
+		}
+	},
+	build: {
+		rollupOptions: {
+			plugins: [nodePolyfills()]
+		}
+	}
 };
 
 export default config;

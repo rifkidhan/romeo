@@ -52,9 +52,9 @@ const customrenderer: Partial<Marked.Renderer> = {
 		return '<pre><code>' + code + '</code></pre>\n';
 	},
 	image(href, title, text) {
-		if (!title) return `<img loading="lazy" src=${href} alt="${text}" />\n`;
+		if (!title) return `<img loading="lazy" decoding="async" src=${href} alt="${text}" />\n`;
 		return `
-        <img loading="lazy" src=${href} alt="${text}" title="${title}" />\n
+        <img loading="lazy" decoding="async" src=${href} alt="${text}" title="${title}" />\n
         `;
 	},
 	paragraph(text) {

@@ -16,7 +16,7 @@
 
 <svelte:window bind:scrollY={currScroll} on:scroll={onScroll} />
 
-<header class:isHidden={!visible} class={currScroll > 100 ? 'fixed' : 'sticky'}>
+<header class:isHidden={!visible} class={currScroll > 120 ? 'fixed' : 'sticky'}>
 	<div class="wrapper">
 		<a href="/" class="home" title="Home Page">
 			<Logo variant="mark" class="w-12 md:w-14" />

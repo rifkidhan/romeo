@@ -85,6 +85,8 @@
 	<Loading type="spinner" />
 {:then _}
 	<img
+		loading="lazy"
+		decoding="async"
 		{src}
 		alt={altText}
 		draggable="false"
